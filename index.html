@@ -244,18 +244,93 @@
       color: var(--aqua); text-transform: uppercase; letter-spacing: 0.08em;
     }
 
-    .photo-mosaic {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 48px;
+    /* ── PHOTO CAROUSEL ──
+       Horizontal swipe gallery. CSS scroll-snap gives native momentum
+       swiping on touch devices with no JS required for the scrolling
+       itself. object-fit: contain guarantees every photo is shown whole
+       and never cropped; a soft backdrop fills the letterbox space so
+       portrait and landscape shots sit comfortably in one row. */
+    .photo-carousel {
       grid-column: 1 / -1;
+      margin-top: 48px;
+      position: relative;
     }
-    .mosaic-img {
-      border-radius: var(--radius); overflow: hidden;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    .carousel-track {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;   /* momentum scroll on iOS */
+      padding: 4px 4px 18px;
+      scrollbar-width: none;                /* Firefox: hide scrollbar */
     }
-    .mosaic-img img { width: 100%; height: 200px; object-fit: cover; transition: transform 0.4s; }
-    .mosaic-img:hover img { transform: scale(1.04); }
-    .mosaic-img.wide { grid-column: span 2; }
-    .mosaic-img.wide img { height: 260px; }
+    .carousel-track::-webkit-scrollbar { display: none; } /* WebKit: hide */
+
+    .carousel-slide {
+      flex: 0 0 82%;            /* each slide ~82% width: peek of next */
+      max-width: 520px;
+      scroll-snap-align: center;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: linear-gradient(160deg, #0e3259, #0b1f3a);
+      box-shadow: 0 8px 28px rgba(11,31,58,0.18);
+      aspect-ratio: 4 / 3;      /* uniform frame; photo sits inside it */
+      display: flex; align-items: center; justify-content: center;
+    }
+    .carousel-slide img {
+      width: 100%; height: 100%;
+      object-fit: contain;      /* WHOLE photo, never cropped */
+      display: block;
+    }
+
+    /* Arrow buttons (shown on devices with a mouse; touch users swipe) */
+    .carousel-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(11,31,58,0.78); border: 1px solid rgba(255,255,255,0.15);
+      color: #fff; cursor: pointer; z-index: 4;
+      display: none; align-items: center; justify-content: center;
+      transition: background 0.2s, transform 0.2s;
+      -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+    }
+    .carousel-btn:hover { background: var(--sky); }
+    .carousel-btn svg { width: 20px; height: 20px; fill: none; stroke: #fff; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .carousel-btn.prev { left: 8px; }
+    .carousel-btn.next { right: 8px; }
+    @media (hover: hover) and (pointer: fine) {
+      .carousel-btn { display: flex; }
+    }
+
+    /* Dot indicators track which slide is centred */
+    .carousel-dots {
+      display: flex; justify-content: center; gap: 8px; margin-top: 12px;
+    }
+    .carousel-dots button {
+      width: 8px; height: 8px; border-radius: 50%; border: none; padding: 0;
+      background: rgba(26,74,122,0.25); cursor: pointer; transition: background 0.2s, transform 0.2s;
+    }
+    .carousel-dots button.active { background: var(--sky); transform: scale(1.4); }
+    .carousel-hint {
+      text-align: center; font-size: 0.78rem; color: var(--muted);
+      margin-top: 10px; letter-spacing: 0.04em;
+    }
+
+    /* ── ISR LOCATOR BADGE ── */
+    .isr-badge {
+      display: flex; align-items: center; gap: 18px;
+      background: var(--foam); border: 1.5px solid rgba(79,163,209,0.25);
+      border-radius: 16px; padding: 20px 28px; margin-bottom: 32px;
+      text-decoration: none; transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .isr-badge:hover { border-color: var(--sky); box-shadow: 0 6px 24px rgba(79,163,209,0.15); }
+    .isr-badge-icon {
+      width: 48px; height: 48px; min-width: 48px; background: var(--navy);
+      border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    }
+    .isr-badge-icon svg { width: 26px; height: 26px; fill: none; stroke: var(--aqua); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .isr-badge-text strong { display: block; font-size: 0.95rem; color: var(--navy); font-weight: 600; margin-bottom: 3px; }
+    .isr-badge-text span { font-size: 0.82rem; color: var(--muted); }
+    .isr-badge-arrow { margin-left: auto; color: var(--sky); font-size: 1.2rem; }
 
     /* ── SERVICES ── */
     #services { background: var(--white); padding: 100px 5vw; }
@@ -401,8 +476,8 @@
       .hamburger { display: flex; }
       .service-cards { grid-template-columns: 1fr; }
       .form-row { grid-template-columns: 1fr; }
-      .photo-mosaic { grid-template-columns: 1fr; }
-      .mosaic-img.wide { grid-column: 1; }
+      .photo-carousel { grid-column: 1; }
+      .carousel-slide { flex: 0 0 88%; }
       .footer-inner { grid-template-columns: 1fr; }
       .footer-bottom { flex-direction: column; text-align: center; }
       .pricing-band { padding: 28px; }
@@ -737,31 +812,38 @@
         <cite>– In memory of Vinny, age 2.5</cite>
       </div>
     </div>
-    <div class="photo-mosaic">
-      <div class="mosaic-img wide reveal">
-        <img src="isr-2.jpeg"
-             alt="ISR swim lesson with infant" loading="lazy" />
+    <div class="photo-carousel reveal">
+      <button class="carousel-btn prev" aria-label="Previous photo">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="carousel-btn next" aria-label="Next photo">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <div class="carousel-track" id="carouselTrack">
+        <div class="carousel-slide">
+          <img src="isr-2.jpeg" alt="Daphne guiding an infant in an ISR survival swim lesson" loading="lazy" />
+        </div>
+        <div class="carousel-slide">
+          <img src="isr-3.jpeg" alt="Child learning to back float during a survival swim lesson" loading="lazy" />
+        </div>
+        <div class="carousel-slide">
+          <img src="isr-4.jpeg" alt="ISR lesson in progress in the water" loading="lazy" />
+        </div>
+        <div class="carousel-slide">
+          <img src="isr-5.jpeg" alt="Infant swimming lesson in Kentucky" loading="lazy" />
+        </div>
+        <div class="carousel-slide">
+          <img src="isr-6.jpeg" alt="Baby swim lesson in Grayson County" loading="lazy" />
+        </div>
+        <div class="carousel-slide">
+          <img src="isr-7.png" alt="ISR survival swim instruction" loading="lazy" />
+        </div>
+        <div class="carousel-slide">
+          <img src="isr-8.png" alt="Daphne working with a child in the water" loading="lazy" />
+        </div>
       </div>
-      <div class="mosaic-img reveal reveal-delay-1">
-        <img src="isr-3.jpeg"
-             alt="Child back float survival swim" loading="lazy" />
-      </div>
-      <div class="mosaic-img reveal reveal-delay-2">
-        <img src="isr-4.jpeg"
-             alt="ISR lesson in progress" loading="lazy" />
-      </div>
-      <div class="mosaic-img reveal reveal-delay-1">
-        <img src="isr-5.jpeg"
-             alt="Infant swimming lesson Kentucky" loading="lazy" />
-      </div>
-      <div class="mosaic-img reveal reveal-delay-2">
-        <img src="isr-6.jpeg"
-             alt="Baby swim lesson Grayson County" loading="lazy" />
-      </div>
-      <div class="mosaic-img wide reveal reveal-delay-3">
-        <img src="isr-7.png"
-             alt="ISR survival swim Kentucky" loading="lazy" />
-      </div>
+      <div class="carousel-dots" id="carouselDots"></div>
+      <p class="carousel-hint">Swipe to see more &rarr;</p>
     </div>
   </div>
 </section>
@@ -864,14 +946,29 @@
         </div>
       </div>
 
+      <a href="https://locator.infantswim.com/?address=Clarkson%2C%20KY%2C%20USA&placeId=ChIJmbdwhz60aIgR65uVpcM6rf0"
+         target="_blank" rel="noopener"
+         style="display:inline-flex; align-items:center; gap:12px; margin-top:24px;
+                background:#edfaf7; border:1.5px solid #6dd5b8; border-radius:12px;
+                padding:12px 18px; text-decoration:none; transition:box-shadow 0.2s;"
+         onmouseover="this.style.boxShadow='0 4px 18px rgba(26,74,122,0.15)'"
+         onmouseout="this.style.boxShadow='none'">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+             stroke="#1a6b42" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        <div>
+          <strong style="display:block; font-size:0.82rem; color:#1a4a3a; letter-spacing:0.04em; text-transform:uppercase;">ISR Certified Instructor</strong>
+          <span style="font-size:0.8rem; color:#2d7a5f;">View on ISR Locator &rarr;</span>
+        </div>
+      </a>
+
       <div class="social-links" style="margin-top:32px;">
-        <a href="https://www.facebook.com/" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">
+        <a href="https://www.facebook.com/people/ISR-with-Daphne-Swim-for-Vinny/100087626074883/" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">
           <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
         </a>
-        <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
-          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        </a>
-        <a href="https://www.tiktok.com/" target="_blank" rel="noopener" class="social-link" aria-label="TikTok">
+        <a href="https://www.tiktok.com/@daphnemattingly?_r=1&_t=ZP-96xpczL9TcF" target="_blank" rel="noopener" class="social-link" aria-label="TikTok">
           <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.82a8.21 8.21 0 004.79 1.53V6.89a4.85 4.85 0 01-1.02-.2z"/></svg>
         </a>
       </div>
@@ -941,13 +1038,10 @@
       <p class="tagline">ISR with Daphne – Swim For Vinny</p>
       <p>Teaching infants and children to roll, float, and wait for rescue in Grayson County and surrounding communities in Kentucky. In memory of Vinny.</p>
       <div class="social-links">
-        <a href="https://www.facebook.com/" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">
+        <a href="https://www.facebook.com/people/ISR-with-Daphne-Swim-for-Vinny/100087626074883/" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">
           <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
         </a>
-        <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
-          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        </a>
-        <a href="https://www.tiktok.com/" target="_blank" rel="noopener" class="social-link" aria-label="TikTok">
+        <a href="https://www.tiktok.com/@daphnemattingly?_r=1&_t=ZP-96xpczL9TcF" target="_blank" rel="noopener" class="social-link" aria-label="TikTok">
           <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.82a8.21 8.21 0 004.79 1.53V6.89a4.85 4.85 0 01-1.02-.2z"/></svg>
         </a>
       </div>
@@ -967,6 +1061,7 @@
         <li><a href="tel:2709254890">(270) 925-4890</a></li>
         <li><a href="mailto:daphne.mattingly@infantswim.com">daphne.mattingly@infantswim.com</a></li>
         <li><a href="https://www.infantswim.com" target="_blank" rel="noopener">ISR Official Site</a></li>
+        <li><a href="https://locator.infantswim.com/?address=Clarkson%2C%20KY%2C%20USA&placeId=ChIJmbdwhz60aIgR65uVpcM6rf0" target="_blank" rel="noopener">Find Daphne on ISR Locator</a></li>
       </ul>
       <p style="margin-top:16px; font-size:0.8rem; line-height:1.6;">
         Grayson County &amp; surrounding counties, Kentucky<br/>
@@ -1213,10 +1308,69 @@
   document.querySelectorAll('img').forEach(img => {
     img.addEventListener('error', function() {
       this.style.opacity = '0';
-      if (this.closest('.mosaic-img')) this.closest('.mosaic-img').style.background = '#d6f0f7';
+      if (this.closest('.carousel-slide')) this.closest('.carousel-slide').style.background = '#0e3259';
       if (this.closest('.hero-photo-wrap')) this.closest('.hero-photo-wrap').style.minHeight = '300px';
     });
   });
+
+  /* ── PHOTO CAROUSEL CONTROLS ──
+     The swiping itself is pure CSS scroll-snap (works with zero JS).
+     This only adds: prev/next arrow buttons for mouse users, dot
+     indicators, and syncing the active dot to whichever slide is
+     currently centred in the track. */
+  (function () {
+    var track = document.getElementById('carouselTrack');
+    var dotsWrap = document.getElementById('carouselDots');
+    if (!track || !dotsWrap) return;
+
+    var slides = Array.prototype.slice.call(track.querySelectorAll('.carousel-slide'));
+    if (!slides.length) return;
+
+    // Build one dot per slide; clicking a dot scrolls that slide into view.
+    var dots = slides.map(function (slide, i) {
+      var b = document.createElement('button');
+      b.setAttribute('aria-label', 'Go to photo ' + (i + 1));
+      b.addEventListener('click', function () {
+        slide.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      });
+      dotsWrap.appendChild(b);
+      return b;
+    });
+
+    // Mark the dot whose slide is nearest the track's horizontal centre.
+    function updateActive() {
+      var trackRect = track.getBoundingClientRect();
+      var center = trackRect.left + trackRect.width / 2;
+      var best = 0, bestDist = Infinity;
+      slides.forEach(function (s, i) {
+        var r = s.getBoundingClientRect();
+        var d = Math.abs((r.left + r.width / 2) - center);
+        if (d < bestDist) { bestDist = d; best = i; }
+      });
+      dots.forEach(function (d, i) { d.classList.toggle('active', i === best); });
+    }
+
+    // Arrow buttons: scroll by roughly one slide width each click.
+    function scrollByOne(dir) {
+      var amount = slides[0].getBoundingClientRect().width + 16; // slide + gap
+      track.scrollBy({ left: dir * amount, behavior: 'smooth' });
+    }
+    var prev = document.querySelector('.carousel-btn.prev');
+    var next = document.querySelector('.carousel-btn.next');
+    if (prev) prev.addEventListener('click', function () { scrollByOne(-1); });
+    if (next) next.addEventListener('click', function () { scrollByOne(1); });
+
+    // Throttle scroll updates to one per frame for smoothness.
+    var ticking = false;
+    track.addEventListener('scroll', function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { updateActive(); ticking = false; });
+    }, { passive: true });
+
+    updateActive();
+    window.addEventListener('resize', updateActive, { passive: true });
+  })();
 </script>
 
 </body>
