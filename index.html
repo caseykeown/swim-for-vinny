@@ -272,8 +272,84 @@
 
     @keyframes fade-up { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
 
+    /* ── SFV TRANSPARENT LOGO WATERMARK (hero background) ──
+       Large ghost of the Swim For Vinny transparent logo sits behind
+       the hero text content. Pure decoration — pointer-events off,
+       aria-hidden in markup. Fades out at edges via mask. */
+    .hero-watermark {
+      position: absolute;
+      right: -60px;
+      bottom: 60px;
+      width: min(480px, 70vw);
+      height: auto;
+      opacity: 0.06;
+      pointer-events: none;
+      user-select: none;
+      -webkit-mask-image: radial-gradient(ellipse 70% 70% at 60% 50%, #000 25%, transparent 75%);
+      mask-image: radial-gradient(ellipse 70% 70% at 60% 50%, #000 25%, transparent 75%);
+      filter: brightness(2) grayscale(0.2);
+      z-index: 1;
+    }
+
+    /* ── CERTIFICATE CARD ── */
+    .cert-card {
+      background: var(--white);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(11,31,58,0.14);
+      border: 1px solid rgba(79,163,209,0.15);
+      margin-top: 32px;
+    }
+    .cert-card-header {
+      background: var(--navy);
+      padding: 14px 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .cert-card-header svg {
+      width: 20px; height: 20px; flex-shrink: 0;
+      fill: none; stroke: var(--aqua); stroke-width: 2;
+      stroke-linecap: round; stroke-linejoin: round;
+    }
+    .cert-card-header span {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--aqua);
+    }
+    .cert-card img {
+      width: 100%; display: block;
+      object-fit: contain;
+      background: #f8f6f2;
+    }
+
     /* ── ABOUT ── */
-    #about { background: var(--sand); padding: 100px 5vw; }
+    #about {
+      background: var(--sand);
+      padding: 100px 5vw;
+      position: relative;   /* establishes stacking context for Vinny ghost */
+      overflow: hidden;
+    }
+
+    /* Vinny ghost watermark — the transparent PNG sits behind all content.
+       A radial-gradient mask fades it out toward every edge so it never
+       feels like a hard image sitting on the section; it dissolves into
+       the background. Opacity is low enough to be subconscious rather
+       than distracting. prefers-reduced-motion leaves it static (it
+       already has no animation) so nothing extra needed. */
+    .vinny-ghost {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(600px, 90vw);
+      height: auto;
+      opacity: 0.07;
+      pointer-events: none;
+      user-select: none;
+      /* radial mask: fully visible in centre, fades to nothing at edges */
+      -webkit-mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, #000 30%, transparent 80%);
+      mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, #000 30%, transparent 80%);
+      /* desaturate so it reads as a memory/impression rather than a photo */
+      filter: grayscale(0.4) sepia(0.15);
+    }
     .section-label {
       font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
       color: var(--sky); font-weight: 600; margin-bottom: 12px;
@@ -840,6 +916,14 @@
       </div>
     </div>
     <div class="hero-visual">
+      <!-- Swim For Vinny transparent logo as large background watermark -->
+      <img
+        class="hero-watermark"
+        src="https://raw.githubusercontent.com/caseykeown/swim-for-vinny/main/Swim%20For%20Vinny%20Transparent%20bg.png"
+        alt=""
+        aria-hidden="true"
+        loading="eager"
+      />
       <div class="hero-photo-wrap">
         <div class="hero-tag">Est. 2023</div>
         <img src="isr-1.jpeg"
@@ -859,6 +943,15 @@
 
 <!-- ABOUT -->
 <section id="about">
+  <!-- Vinny ghost: transparent PNG watermarked into the section background.
+       z-index 0 keeps it behind the about-grid content (z-index auto/1). -->
+  <img
+    class="vinny-ghost"
+    src="https://raw.githubusercontent.com/caseykeown/swim-for-vinny/main/Untitled%20design.png"
+    alt=""
+    aria-hidden="true"
+    loading="lazy"
+  />
   <div class="about-grid">
     <div class="about-text reveal">
       <p class="section-label">Our Story</p>
@@ -867,6 +960,19 @@
       <p>Children can drown in <strong>as little as 30 seconds.</strong> Vinny's story is the reason ISR with Daphne exists — because the ability to roll and float could have given him those lifesaving seconds.</p>
       <p>ISR (Infant Swimming Resource) teaches children to self-rescue. If a child enters the water unexpectedly, they learn to roll to their back, float, and wait for help. It is the only research-based aquatic survival program of its kind.</p>
       <p><strong>Daphne Mattingly</strong> is a certified ISR instructor serving Grayson and surrounding counties in Kentucky. Her sessions are always one-on-one — never group classes — because survival swimming is too important to leave to chance.</p>
+
+      <!-- ISR Certification certificate -->
+      <div class="cert-card reveal reveal-delay-1">
+        <div class="cert-card-header">
+          <svg viewBox="0 0 24 24"><path d="M12 15l-2 5-5-2 2-5"/><path d="M12 15l2 5 5-2-2-5"/><circle cx="12" cy="9" r="6"/></svg>
+          <span>ISR Certified Instructor</span>
+        </div>
+        <img
+          src="https://raw.githubusercontent.com/caseykeown/swim-for-vinny/main/IMG_2380.jpeg"
+          alt="Daphne Mattingly ISR Certified Instructor certificate"
+          loading="lazy"
+        />
+      </div>
     </div>
     <div class="reveal reveal-delay-1">
       <div class="vinny-card">
@@ -902,6 +1008,13 @@
         </div>
         <div class="carousel-slide">
           <img src="isr-8.png" alt="Daphne working with a child in the water" loading="lazy" />
+        </div>
+        <div class="carousel-slide">
+          <img
+            src="https://raw.githubusercontent.com/caseykeown/swim-for-vinny/main/Daphne-baby-in-water.png"
+            alt="Daphne guiding a baby through an ISR survival swim lesson"
+            loading="lazy"
+          />
         </div>
       </div>
       <div class="carousel-dots" id="carouselDots"></div>
