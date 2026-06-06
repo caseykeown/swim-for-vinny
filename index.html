@@ -137,14 +137,89 @@
     }
 
     .hero-text { animation: fade-up 0.9s ease both; }
-    .hero-kicker {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(79,163,209,0.15); border: 1px solid rgba(79,163,209,0.3);
-      color: var(--aqua); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
-      padding: 6px 14px; border-radius: 50px; margin-bottom: 20px; font-weight: 500;
+    /* ── LIQUID GLASS ELEMENTS ──
+       Mimics iOS 26 liquid glass: backdrop blur for translucency,
+       a bright specular highlight on the top edge (the "rim light"),
+       a subtle inner shadow on the bottom (the "depth shadow"),
+       and a very faint fill — no solid background. The result reads
+       as a pill of actual glass sitting on the hero. */
+
+    /* Shared liquid glass mixin applied to kicker, badges, outline btn */
+    .hero-kicker,
+    .badge,
+    .btn-outline {
+      /* Translucent glass fill */
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px) saturate(1.4) brightness(1.08);
+      -webkit-backdrop-filter: blur(12px) saturate(1.4) brightness(1.08);
+      /* Multi-layer box-shadow:
+         1. top inner highlight = specular rim (light hitting the edge)
+         2. bottom inner shadow = depth / thickness illusion
+         3. outer glow = soft ambient bounce */
+      box-shadow:
+        inset 0  1px 0   rgba(255,255,255,0.55),   /* top specular */
+        inset 0 -1px 0   rgba(0,0,0,0.12),          /* bottom depth */
+        0 2px 12px       rgba(11,31,58,0.18);        /* outer glow   */
+      border: 1px solid rgba(255,255,255,0.22);
+      /* Slight inner gradient to reinforce the curved-glass look */
+      position: relative;
+      overflow: hidden;
     }
-    .hero-kicker::before { content: ''; display: block; width: 6px; height: 6px; background: var(--aqua); border-radius: 50%; animation: pulse 2s infinite; }
+    /* Pseudo-element shimmer streak across the top half of each pill —
+       the classic "glass glint" that makes it look convex */
+    .hero-kicker::after,
+    .badge::after,
+    .btn-outline::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        160deg,
+        rgba(255,255,255,0.18) 0%,
+        rgba(255,255,255,0.04) 50%,
+        transparent 100%
+      );
+      border-radius: inherit;
+      pointer-events: none;
+    }
+
+    .hero-kicker {
+      color: rgba(255,255,255,0.92);
+      font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 6px 14px; border-radius: 50px; margin-bottom: 20px; font-weight: 500;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    /* Override the old ::before (was just the pulsing dot — keep it but
+       scope it so the new ::after glint doesn't conflict) */
+    .hero-kicker::before {
+      content: ''; display: block; width: 6px; height: 6px;
+      background: var(--aqua); border-radius: 50%;
+      animation: pulse 2s infinite;
+      position: relative; z-index: 1; flex-shrink: 0;
+    }
     @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+    .badge {
+      color: rgba(255,255,255,0.88);
+      font-size: 0.78rem; padding: 6px 14px; border-radius: 50px; font-weight: 400;
+      display: inline-block;
+    }
+
+    .btn-outline {
+      color: rgba(255,255,255,0.92);
+      padding: 13px 28px; border-radius: 50px; font-size: 0.95rem; font-weight: 500;
+      transition: box-shadow 0.2s, background 0.2s;
+      display: inline-block;
+    }
+    .btn-outline:hover {
+      background: rgba(255,255,255,0.14);
+      box-shadow:
+        inset 0  1px 0 rgba(255,255,255,0.65),
+        inset 0 -1px 0 rgba(0,0,0,0.14),
+        0 4px 20px rgba(79,163,209,0.25);
+      color: var(--white);
+      border-color: rgba(255,255,255,0.35);
+    }
 
     h1 {
       font-family: var(--serif); font-size: clamp(2.4rem, 5vw, 3.8rem); color: var(--white);
@@ -155,13 +230,7 @@
       font-size: 1.05rem; color: rgba(255,255,255,0.65); line-height: 1.7; margin: 20px 0 36px;
       max-width: 460px;
     }
-    .hero-badges {
-      display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 36px;
-    }
-    .badge {
-      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
-      color: rgba(255,255,255,0.8); font-size: 0.78rem; padding: 6px 14px; border-radius: 50px; font-weight: 400;
-    }
+    .hero-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 36px; }
     .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
     .btn-primary {
       background: linear-gradient(135deg, var(--sky), var(--aqua));
@@ -171,12 +240,6 @@
       transition: transform 0.2s, box-shadow 0.2s;
     }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(79,163,209,0.45); }
-    .btn-outline {
-      border: 1.5px solid rgba(255,255,255,0.25); color: rgba(255,255,255,0.85);
-      padding: 13px 28px; border-radius: 50px; font-size: 0.95rem; font-weight: 400;
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .btn-outline:hover { border-color: var(--aqua); color: var(--aqua); }
 
     .hero-visual {
       position: relative; animation: fade-up 0.9s 0.2s ease both;
@@ -505,11 +568,11 @@
        ════════════════════════════════════════════════════════════ */
 
     :root {
-      /* Waterline sits this far below the top of the viewport. Tuned to
-         clear the fixed nav (~72px) so content breaks the surface just
-         under the bar. JS keeps these in sync on resize. */
-      --waterline-y: 96px;
-      --waterline-h: 64px;   /* thickness of the refractive band */
+      /* Waterline now sits at the very top of the viewport — no dead zone.
+         The nav lives at z-index 100 above the effect so it stays readable.
+         JS reads these via getComputedStyle to keep the canvas in sync. */
+      --waterline-y: 0px;
+      --waterline-h: 80px;   /* covers full nav height */
     }
 
     /* Effect container. Fixed + pointer-events:none means it overlays
@@ -524,16 +587,15 @@
       contain: strict;        /* isolate paints for cheaper compositing */
     }
 
-    /* Subtle depth tint: blue that deepens toward the bottom, selling
-       the idea of looking DOWN through water. Very low opacity to
-       protect readability. */
+    /* Depth tint: full-screen blue gradient selling the underwater depth.
+       Starts at the very top so there is zero bare strip above the nav. */
     .depth-tint {
       position: absolute;
       inset: 0;
       background: linear-gradient(
         to bottom,
-        rgba(116,205,224,0.00) 0%,
-        rgba(79,163,209,0.04) 55%,
+        rgba(11,31,58,0.18) 0%,       /* slight navy at the very top */
+        rgba(79,163,209,0.06) 40%,
         rgba(26,74,122,0.10) 100%
       );
       mix-blend-mode: multiply;
