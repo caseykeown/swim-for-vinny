@@ -272,30 +272,30 @@
 
     @keyframes fade-up { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
 
-    /* ── SFV TRANSPARENT LOGO WATERMARK (hero background) ──
-       Centred at the bottom of the hero so it's never clipped on any
-       screen width or orientation. Large enough to read clearly but
-       low opacity so it doesn't compete with the text. */
-    .hero-watermark {
-      position: absolute;
-      left: 50%;
-      bottom: 70px;
-      transform: translateX(-50%);
-      width: min(560px, 80vw);
-      height: auto;
-      opacity: 0.18;
+    /* ── VAN SEAM ──
+       The Swim For Vinny van sits centred on the wave transition between
+       the navy hero and the sandy about section. Negative top margin pulls
+       it up so the van body overlaps the wave; the bottom margin pushes
+       it down into the sandy area. pointer-events:none means it never
+       blocks taps or scrolling. */
+    .van-seam {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      margin-top: -80px;
+      margin-bottom: -40px;
       pointer-events: none;
       user-select: none;
-      -webkit-mask-image: radial-gradient(ellipse 90% 85% at 50% 55%, #000 45%, transparent 85%);
-      mask-image: radial-gradient(ellipse 90% 85% at 50% 55%, #000 45%, transparent 85%);
-      z-index: 2;
+    }
+    .van-seam img {
+      width: min(500px, 82vw);
+      height: auto;
+      opacity: 0.72;
+      filter: drop-shadow(0 8px 24px rgba(11,31,58,0.22));
     }
     @media (max-width: 640px) {
-      .hero-watermark {
-        width: min(340px, 88vw);
-        bottom: 100px;
-        opacity: 0.15;
-      }
+      .van-seam { margin-top: -60px; margin-bottom: -20px; }
+      .van-seam img { width: min(300px, 88vw); }
     }
 
     /* ── CERTIFICATE CARD ── */
@@ -932,18 +932,22 @@
       </div>
     </div>
   </div>
-  <!-- Swim For Vinny van logo watermark — positioned over the full hero -->
-  <img
-    class="hero-watermark"
-    src="https://raw.githubusercontent.com/caseykeown/swim-for-vinny/main/Swim%20For%20Vinny%20Transparent%20bg.png"
-    alt=""
-    aria-hidden="true"
-    loading="eager"
-  />
   <svg class="wave-bottom" viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#f5efe6" />
   </svg>
 </section>
+
+<!-- VAN SEAM — sits exactly on the colour transition between hero and about.
+     Negative margins pull it up into the hero and down into the about section
+     so the van straddles the wave. z-index 10 keeps it above both sections'
+     backgrounds but pointer-events:none means it never blocks scrolling or taps. -->
+<div class="van-seam" aria-hidden="true">
+  <img
+    src="https://raw.githubusercontent.com/caseykeown/swim-for-vinny/main/Swim%20For%20Vinny%20Transparent%20bg.png"
+    alt=""
+    loading="lazy"
+  />
+</div>
 
 <!-- ABOUT -->
 <section id="about">
