@@ -126,7 +126,27 @@
 
     /* wave divider */
     .wave-bottom {
-      position: absolute; bottom: -2px; left: 0; right: 0; z-index: 2;
+      position: absolute; bottom: -2px; left: 0; right: 0; z-index: 4;
+    }
+
+    /* ── HERO VAN ──
+       Centred at the bottom of the hero, above the hero content (z-index 3)
+       but below the wave (z-index 4) which masks the white PNG edge. */
+    .hero-van {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(260px, 55vw);
+      height: auto;
+      opacity: 0.5;
+      pointer-events: none;
+      user-select: none;
+      z-index: 3;
+      filter: drop-shadow(0 4px 12px rgba(11,31,58,0.3));
+    }
+    @media (max-width: 640px) {
+      .hero-van { width: min(180px, 52vw); bottom: 22px; opacity: 0.45; }
     }
 
     .hero-inner {
@@ -278,25 +298,7 @@
        it up so the van body overlaps the wave; the bottom margin pushes
        it down into the sandy area. pointer-events:none means it never
        blocks taps or scrolling. */
-    .van-seam {
-      position: relative;
-      z-index: 10;
-      text-align: center;
-      margin-top: -80px;
-      margin-bottom: -40px;
-      pointer-events: none;
-      user-select: none;
-    }
-    .van-seam img {
-      width: min(500px, 82vw);
-      height: auto;
-      opacity: 0.72;
-      filter: drop-shadow(0 8px 24px rgba(11,31,58,0.22));
-    }
-    @media (max-width: 640px) {
-      .van-seam { margin-top: -60px; margin-bottom: -20px; }
-      .van-seam img { width: min(300px, 88vw); }
-    }
+
 
     /* ── CERTIFICATE CARD ── */
     .cert-card {
@@ -932,22 +934,19 @@
       </div>
     </div>
   </div>
+  <!-- Van tucked inside the hero, above the wave z-index so the wave
+       covers its bottom edge and hides the PNG white edge cleanly -->
+  <img
+    class="hero-van"
+    src="https://raw.githubusercontent.com/caseykeown/swim-for-vinny/main/Swim%20For%20Vinny%20Transparent%20bg.png"
+    alt=""
+    aria-hidden="true"
+    loading="lazy"
+  />
   <svg class="wave-bottom" viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#f5efe6" />
   </svg>
 </section>
-
-<!-- VAN SEAM — sits exactly on the colour transition between hero and about.
-     Negative margins pull it up into the hero and down into the about section
-     so the van straddles the wave. z-index 10 keeps it above both sections'
-     backgrounds but pointer-events:none means it never blocks scrolling or taps. -->
-<div class="van-seam" aria-hidden="true">
-  <img
-    src="https://raw.githubusercontent.com/caseykeown/swim-for-vinny/main/Swim%20For%20Vinny%20Transparent%20bg.png"
-    alt=""
-    loading="lazy"
-  />
-</div>
 
 <!-- ABOUT -->
 <section id="about">
