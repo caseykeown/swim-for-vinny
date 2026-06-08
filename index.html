@@ -459,6 +459,22 @@
       margin-top: 10px; letter-spacing: 0.04em;
     }
 
+    /* ── TIKTOK EMBEDS ──
+       Two-column row on desktop, single column stack on mobile.
+       Each TikTok card is a standard blockquote rendered by TikTok's
+       embed.js — we just control the wrapper layout. */
+    .tiktok-embeds {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .tiktok-embeds .tiktok-embed {
+      flex: 0 0 auto;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
     /* ── ISR LOCATOR BADGE ── */
     .isr-badge {
       display: flex; align-items: center; gap: 18px;
@@ -1026,6 +1042,28 @@
       </div>
       <div class="carousel-dots" id="carouselDots"></div>
       <p class="carousel-hint">Swipe to see more &rarr;</p>
+    </div>
+
+    <!-- TikTok Videos -->
+    <div class="tiktok-row reveal" style="grid-column:1/-1; margin-top:48px;">
+      <p class="section-label" style="text-align:center; margin-bottom:20px;">From Daphne's TikTok</p>
+      <div class="tiktok-embeds">
+        <blockquote
+          class="tiktok-embed"
+          cite="https://www.tiktok.com/t/ZP8sB4Nu3/"
+          data-video-id="ZP8sB4Nu3"
+          style="max-width:325px; min-width:280px;">
+          <section></section>
+        </blockquote>
+        <blockquote
+          class="tiktok-embed"
+          cite="https://www.tiktok.com/t/ZP8sBtCaW/"
+          data-video-id="ZP8sBtCaW"
+          style="max-width:325px; min-width:280px;">
+          <section></section>
+        </blockquote>
+      </div>
+      <script async src="https://www.tiktok.com/embed.js"></script>
     </div>
   </div>
 </section>
