@@ -333,27 +333,33 @@
     #about {
       background: var(--sand);
       padding: 100px 5vw;
-      position: relative;   /* establishes stacking context for Vinny ghost */
+      position: relative;
       overflow: hidden;
     }
 
-    /* Vinny ghost watermark — the transparent PNG sits behind all content.
-       A radial-gradient mask fades it out toward every edge so it never
-       feels like a hard image sitting on the section; it dissolves into
-       the background. Image is already very light so opacity can be higher. */
-    .vinny-ghost {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: min(700px, 95vw);
-      height: auto;
-      opacity: 0.32;
-      pointer-events: none;
-      user-select: none;
-      -webkit-mask-image: radial-gradient(ellipse 80% 75% at 50% 50%, #000 40%, transparent 85%);
-      mask-image: radial-gradient(ellipse 80% 75% at 50% 50%, #000 40%, transparent 85%);
-      filter: grayscale(0.2);
+    /* Vinny memorial photo — a real, properly framed photo rather than a
+       faint background watermark (the previous transparent-ghost treatment
+       didn't read well on mobile under the quote card). Sits as its own
+       card in the about-grid flow. */
+    .vinny-photo-card {
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 12px 36px rgba(11,31,58,0.16);
+      margin-top: 24px;
+    }
+    .vinny-photo-card img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      max-height: 360px;
+    }
+    .vinny-photo-caption {
+      background: var(--navy);
+      color: rgba(255,255,255,0.7);
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      text-align: center;
+      padding: 10px 16px;
     }
     .section-label {
       font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
@@ -966,15 +972,6 @@
 
 <!-- ABOUT -->
 <section id="about">
-  <!-- Vinny ghost: transparent PNG watermarked into the section background.
-       z-index 0 keeps it behind the about-grid content (z-index auto/1). -->
-  <img
-    class="vinny-ghost"
-    src="https://raw.githubusercontent.com/caseykeown/swim-for-vinny/main/Untitled%20design.png"
-    alt=""
-    aria-hidden="true"
-    loading="lazy"
-  />
   <div class="about-grid">
     <div class="about-text reveal">
       <p class="section-label">Our Story</p>
@@ -1001,6 +998,14 @@
       <div class="vinny-card">
         <blockquote>"He thought he would float back up since that's what always happened. The ability to float could have given him lifesaving seconds."</blockquote>
         <cite>– In memory of Vinny, age 2.5</cite>
+      </div>
+      <div class="vinny-photo-card">
+        <img
+          src="https://raw.githubusercontent.com/caseykeown/swim-for-vinny/main/vinny.jpg"
+          alt="In memory of Vinny"
+          loading="lazy"
+        />
+        <div class="vinny-photo-caption">In memory of Vinny — the reason this program exists</div>
       </div>
     </div>
     <div class="photo-carousel reveal">
