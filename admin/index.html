@@ -1,0 +1,1658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ISR survival swim lessons in Grayson County, KY with Daphne Mattingly. 1-on-1 infant and toddler swim lessons starting at 6 months. Swim-float-swim for 18 months and older. Swim For Vinny." />
+  <meta name="keywords" content="ISR swim lessons, infant swim, survival swim, Grayson County Kentucky, toddler swimming, baby swim lessons, Elizabethtown swim" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="ISR with Daphne – Swim For Vinny" />
+  <meta property="og:description" content="1-on-1 ISR survival swim lessons in Grayson County, KY. Teaching infants and children to roll, float, and wait for rescue. Starting at 6 months." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/caseykeown/swim-for-vinny/main/swim-for-vinny-logo.png" />
+  <title>ISR with Daphne – Swim For Vinny | Grayson County, KY</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── TOKENS ── */
+    :root {
+      --navy:    #0b1f3a;
+      --blue:    #1a4a7a;
+      --sky:     #4fa3d1;
+      --aqua:    #74cde0;
+      --foam:    #d6f0f7;
+      --sand:    #f5efe6;
+      --warm:    #e8d5b7;
+      --gold:    #c9963a;
+      --white:   #ffffff;
+      --text:    #1a2332;
+      --muted:   #5a6b7e;
+      --serif:   'Playfair Display', Georgia, serif;
+      --sans:    'DM Sans', system-ui, sans-serif;
+      --radius:  12px;
+      --shadow:  0 4px 32px rgba(11,31,58,0.12);
+    }
+
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--sans); color: var(--text); background: var(--white); overflow-x: hidden; }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 5vw;
+      background: rgba(11,31,58,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(79,163,209,0.15);
+      transition: padding 0.3s;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav-logo img {
+      height: 40px; width: 40px; object-fit: contain; border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+    }
+    .nav-logo span {
+      font-family: var(--serif); font-size: 1rem; color: var(--white); font-weight: 700; line-height: 1.2;
+    }
+    .nav-logo small { display: block; font-family: var(--sans); font-size: 0.65rem; color: var(--aqua); font-weight: 300; letter-spacing: 0.08em; text-transform: uppercase; }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a { font-size: 0.85rem; color: rgba(255,255,255,0.8); letter-spacing: 0.04em; text-transform: uppercase; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--aqua); }
+    .nav-cta {
+      background: var(--sky); color: var(--white); padding: 8px 20px;
+      border-radius: 50px; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.04em;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .nav-cta:hover { background: var(--aqua); transform: translateY(-1px); }
+
+    /* hamburger */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--white); transition: 0.3s; border-radius: 2px; }
+    .mobile-menu {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 99;
+      background: var(--navy); flex-direction: column; align-items: center; justify-content: center; gap: 32px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-family: var(--serif); font-size: 1.8rem; color: var(--white); }
+    .mobile-menu a:hover { color: var(--aqua); }
+    .mobile-close { position: absolute; top: 24px; right: 5vw; background: none; border: none; color: var(--white); font-size: 2rem; cursor: pointer; }
+
+    /* ── HERO ── */
+    #home {
+      min-height: 100vh;
+      background: var(--navy);
+      position: relative;
+      display: flex; align-items: center;
+      overflow: hidden;
+      padding-top: 72px;
+    }
+
+    .hero-water {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 40%, rgba(74,163,209,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 80% at 20% 80%, rgba(116,205,224,0.12) 0%, transparent 60%),
+        linear-gradient(160deg, #0b1f3a 0%, #0d2a4a 40%, #0e3259 100%);
+    }
+
+    /* animated ripple rings */
+    .ripple-container {
+      position: absolute; bottom: -80px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 300px; z-index: 1;
+    }
+    .ripple {
+      position: absolute; border-radius: 50%;
+      border: 1px solid rgba(79,163,209,0.25);
+      animation: ripple-expand 6s ease-out infinite;
+    }
+    .ripple:nth-child(1) { width: 200px; height: 100px; left: 50%; bottom: 0; transform: translateX(-50%); animation-delay: 0s; }
+    .ripple:nth-child(2) { width: 350px; height: 175px; left: 50%; bottom: 0; transform: translateX(-50%); animation-delay: 1.5s; }
+    .ripple:nth-child(3) { width: 500px; height: 250px; left: 50%; bottom: 0; transform: translateX(-50%); animation-delay: 3s; }
+    .ripple:nth-child(4) { width: 650px; height: 325px; left: 50%; bottom: 0; transform: translateX(-50%); animation-delay: 4.5s; }
+    @keyframes ripple-expand {
+      0%   { opacity: 0.6; transform: translateX(-50%) scaleX(0.3) scaleY(0.3); }
+      100% { opacity: 0;   transform: translateX(-50%) scaleX(1)   scaleY(1); }
+    }
+
+    /* wave divider */
+    .wave-bottom {
+      position: absolute; bottom: -2px; left: 0; right: 0; z-index: 4;
+    }
+
+    /* ── HERO VAN ──
+       Centred at the bottom of the hero, above the hero content (z-index 3)
+       but below the wave (z-index 4) which masks the white PNG edge. */
+    .hero-van {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(260px, 55vw);
+      height: auto;
+      opacity: 0.5;
+      pointer-events: none;
+      user-select: none;
+      z-index: 3;
+      filter: drop-shadow(0 4px 12px rgba(11,31,58,0.3));
+    }
+    @media (max-width: 640px) {
+      .hero-van { width: min(180px, 52vw); bottom: 22px; opacity: 0.45; }
+    }
+
+    .hero-inner {
+      position: relative; z-index: 3;
+      width: 100%; max-width: 1200px; margin: 0 auto;
+      padding: 60px 5vw 120px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+    }
+
+    .hero-text { animation: fade-up 0.9s ease both; }
+    /* ── LIQUID GLASS ELEMENTS ──
+       Mimics iOS 26 liquid glass: backdrop blur for translucency,
+       a bright specular highlight on the top edge (the "rim light"),
+       a subtle inner shadow on the bottom (the "depth shadow"),
+       and a very faint fill — no solid background. The result reads
+       as a pill of actual glass sitting on the hero. */
+
+    /* Shared liquid glass mixin applied to kicker, badges, outline btn */
+    .hero-kicker,
+    .badge,
+    .btn-outline {
+      /* Translucent glass fill */
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px) saturate(1.4) brightness(1.08);
+      -webkit-backdrop-filter: blur(12px) saturate(1.4) brightness(1.08);
+      /* Multi-layer box-shadow:
+         1. top inner highlight = specular rim (light hitting the edge)
+         2. bottom inner shadow = depth / thickness illusion
+         3. outer glow = soft ambient bounce */
+      box-shadow:
+        inset 0  1px 0   rgba(255,255,255,0.55),   /* top specular */
+        inset 0 -1px 0   rgba(0,0,0,0.12),          /* bottom depth */
+        0 2px 12px       rgba(11,31,58,0.18);        /* outer glow   */
+      border: 1px solid rgba(255,255,255,0.22);
+      /* Slight inner gradient to reinforce the curved-glass look */
+      position: relative;
+      overflow: hidden;
+    }
+    /* Pseudo-element shimmer streak across the top half of each pill —
+       the classic "glass glint" that makes it look convex */
+    .hero-kicker::after,
+    .badge::after,
+    .btn-outline::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        160deg,
+        rgba(255,255,255,0.18) 0%,
+        rgba(255,255,255,0.04) 50%,
+        transparent 100%
+      );
+      border-radius: inherit;
+      pointer-events: none;
+    }
+
+    .hero-kicker {
+      color: rgba(255,255,255,0.92);
+      font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 6px 14px; border-radius: 50px; margin-bottom: 20px; font-weight: 500;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    /* Override the old ::before (was just the pulsing dot — keep it but
+       scope it so the new ::after glint doesn't conflict) */
+    .hero-kicker::before {
+      content: ''; display: block; width: 6px; height: 6px;
+      background: var(--aqua); border-radius: 50%;
+      animation: pulse 2s infinite;
+      position: relative; z-index: 1; flex-shrink: 0;
+    }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+    .badge {
+      color: rgba(255,255,255,0.88);
+      font-size: 0.78rem; padding: 6px 14px; border-radius: 50px; font-weight: 400;
+      display: inline-block;
+    }
+
+    .btn-outline {
+      color: rgba(255,255,255,0.92);
+      padding: 13px 28px; border-radius: 50px; font-size: 0.95rem; font-weight: 500;
+      transition: box-shadow 0.2s, background 0.2s;
+      display: inline-block;
+    }
+    .btn-outline:hover {
+      background: rgba(255,255,255,0.14);
+      box-shadow:
+        inset 0  1px 0 rgba(255,255,255,0.65),
+        inset 0 -1px 0 rgba(0,0,0,0.14),
+        0 4px 20px rgba(79,163,209,0.25);
+      color: var(--white);
+      border-color: rgba(255,255,255,0.35);
+    }
+
+    h1 {
+      font-family: var(--serif); font-size: clamp(2.4rem, 5vw, 3.8rem); color: var(--white);
+      line-height: 1.1; font-weight: 900; margin-bottom: 8px;
+    }
+    h1 span { color: var(--aqua); display: block; }
+    .hero-sub {
+      font-size: 1.05rem; color: rgba(255,255,255,0.65); line-height: 1.7; margin: 20px 0 36px;
+      max-width: 460px;
+    }
+    .hero-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 36px; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--sky), var(--aqua));
+      color: var(--white); padding: 14px 30px; border-radius: 50px;
+      font-weight: 500; font-size: 0.95rem; letter-spacing: 0.02em;
+      box-shadow: 0 8px 24px rgba(79,163,209,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(79,163,209,0.45); }
+
+    .hero-visual {
+      position: relative; animation: fade-up 0.9s 0.2s ease both;
+    }
+    .hero-photo-wrap {
+      position: relative; border-radius: 20px; overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+    }
+    .hero-photo-wrap::before {
+      content: ''; position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(to bottom, transparent 50%, rgba(11,31,58,0.6) 100%);
+    }
+    .hero-photo-wrap img {
+      width: 100%; height: 420px; object-fit: cover; display: block;
+    }
+    .hero-stat-card {
+      position: absolute; bottom: -20px; left: -20px; z-index: 2;
+      background: var(--white); border-radius: var(--radius);
+      padding: 14px 20px; box-shadow: var(--shadow);
+    }
+    .hero-stat-card strong { display: block; font-family: var(--serif); font-size: 1.6rem; color: var(--navy); }
+    .hero-stat-card span { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
+    .hero-tag {
+      position: absolute; top: 16px; right: -10px; z-index: 3;
+      background: var(--gold); color: var(--white);
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 50px;
+      box-shadow: 0 4px 14px rgba(201,150,58,0.4);
+    }
+
+    @keyframes fade-up { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+
+    /* ── VAN SEAM ──
+       The Swim For Vinny van sits centred on the wave transition between
+       the navy hero and the sandy about section. Negative top margin pulls
+       it up so the van body overlaps the wave; the bottom margin pushes
+       it down into the sandy area. pointer-events:none means it never
+       blocks taps or scrolling. */
+
+
+    /* ── CERTIFICATE CARD ── */
+    .cert-card {
+      background: var(--white);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(11,31,58,0.14);
+      border: 1px solid rgba(79,163,209,0.15);
+      margin-top: 32px;
+    }
+    .cert-card-header {
+      background: var(--navy);
+      padding: 14px 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .cert-card-header svg {
+      width: 20px; height: 20px; flex-shrink: 0;
+      fill: none; stroke: var(--aqua); stroke-width: 2;
+      stroke-linecap: round; stroke-linejoin: round;
+    }
+    .cert-card-header span {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--aqua);
+    }
+    .cert-card img {
+      width: 100%; display: block;
+      object-fit: contain;
+      background: #f8f6f2;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--sand);
+      padding: 100px 5vw;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Vinny memorial photo — a real, properly framed photo rather than a
+       faint background watermark (the previous transparent-ghost treatment
+       didn't read well on mobile under the quote card). Sits as its own
+       card in the about-grid flow. */
+    .vinny-photo-card {
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 12px 36px rgba(11,31,58,0.16);
+      margin-top: 24px;
+    }
+    .vinny-photo-card img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      max-height: 360px;
+    }
+    .vinny-photo-caption {
+      background: var(--navy);
+      color: rgba(255,255,255,0.7);
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      text-align: center;
+      padding: 10px 16px;
+    }
+    .section-label {
+      font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--sky); font-weight: 600; margin-bottom: 12px;
+    }
+    h2 {
+      font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--navy); line-height: 1.15; font-weight: 900; margin-bottom: 20px;
+    }
+    h2 em { font-style: normal; color: var(--sky); }
+
+    .about-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .about-text p { font-size: 1rem; line-height: 1.8; color: var(--muted); margin-bottom: 16px; }
+    .about-text p strong { color: var(--text); }
+
+    .vinny-card {
+      background: var(--navy); border-radius: 20px; padding: 36px;
+      position: relative; overflow: hidden;
+      box-shadow: 0 20px 50px rgba(11,31,58,0.2);
+    }
+    .vinny-card::before {
+      content: '"'; position: absolute; top: -20px; left: 20px;
+      font-family: var(--serif); font-size: 12rem; color: rgba(79,163,209,0.08);
+      line-height: 1; pointer-events: none;
+    }
+    .vinny-card blockquote {
+      font-family: var(--serif); font-size: 1.2rem; color: var(--white); line-height: 1.65;
+      font-style: italic; margin-bottom: 24px; position: relative; z-index: 1;
+    }
+    .vinny-card cite {
+      font-family: var(--sans); font-style: normal; font-size: 0.8rem;
+      color: var(--aqua); text-transform: uppercase; letter-spacing: 0.08em;
+    }
+
+    /* ── PHOTO CAROUSEL ──
+       Horizontal swipe gallery. CSS scroll-snap gives native momentum
+       swiping on touch devices with no JS required for the scrolling
+       itself. object-fit: contain guarantees every photo is shown whole
+       and never cropped; a soft backdrop fills the letterbox space so
+       portrait and landscape shots sit comfortably in one row. */
+    .photo-carousel {
+      grid-column: 1 / -1;
+      margin-top: 48px;
+      position: relative;
+    }
+    .carousel-track {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;   /* momentum scroll on iOS */
+      padding: 4px 4px 18px;
+      scrollbar-width: none;                /* Firefox: hide scrollbar */
+    }
+    .carousel-track::-webkit-scrollbar { display: none; } /* WebKit: hide */
+
+    .carousel-slide {
+      flex: 0 0 82%;            /* each slide ~82% width: peek of next */
+      max-width: 520px;
+      scroll-snap-align: center;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: linear-gradient(160deg, #0e3259, #0b1f3a);
+      box-shadow: 0 8px 28px rgba(11,31,58,0.18);
+      aspect-ratio: 4 / 3;      /* uniform frame; photo sits inside it */
+      display: flex; align-items: center; justify-content: center;
+    }
+    .carousel-slide img {
+      width: 100%; height: 100%;
+      object-fit: contain;      /* WHOLE photo, never cropped */
+      display: block;
+    }
+
+    /* Arrow buttons (shown on devices with a mouse; touch users swipe) */
+    .carousel-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(11,31,58,0.78); border: 1px solid rgba(255,255,255,0.15);
+      color: #fff; cursor: pointer; z-index: 4;
+      display: none; align-items: center; justify-content: center;
+      transition: background 0.2s, transform 0.2s;
+      -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+    }
+    .carousel-btn:hover { background: var(--sky); }
+    .carousel-btn svg { width: 20px; height: 20px; fill: none; stroke: #fff; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .carousel-btn.prev { left: 8px; }
+    .carousel-btn.next { right: 8px; }
+    @media (hover: hover) and (pointer: fine) {
+      .carousel-btn { display: flex; }
+    }
+
+    /* Dot indicators track which slide is centred */
+    .carousel-dots {
+      display: flex; justify-content: center; gap: 8px; margin-top: 12px;
+    }
+    .carousel-dots button {
+      width: 8px; height: 8px; border-radius: 50%; border: none; padding: 0;
+      background: rgba(26,74,122,0.25); cursor: pointer; transition: background 0.2s, transform 0.2s;
+    }
+    .carousel-dots button.active { background: var(--sky); transform: scale(1.4); }
+    .carousel-hint {
+      text-align: center; font-size: 0.78rem; color: var(--muted);
+      margin-top: 10px; letter-spacing: 0.04em;
+    }
+
+    /* ── TIKTOK EMBEDS ──
+       Two-column row on desktop, single column stack on mobile.
+       Each TikTok card is a standard blockquote rendered by TikTok's
+       embed.js — we just control the wrapper layout. */
+    .tiktok-embeds {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .tiktok-embeds .tiktok-embed {
+      flex: 0 0 auto;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    /* ── ISR LOCATOR BADGE ── */
+    .isr-badge {
+      display: flex; align-items: center; gap: 18px;
+      background: var(--foam); border: 1.5px solid rgba(79,163,209,0.25);
+      border-radius: 16px; padding: 20px 28px; margin-bottom: 32px;
+      text-decoration: none; transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .isr-badge:hover { border-color: var(--sky); box-shadow: 0 6px 24px rgba(79,163,209,0.15); }
+    .isr-badge-icon {
+      width: 48px; height: 48px; min-width: 48px; background: var(--navy);
+      border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    }
+    .isr-badge-icon svg { width: 26px; height: 26px; fill: none; stroke: var(--aqua); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .isr-badge-text strong { display: block; font-size: 0.95rem; color: var(--navy); font-weight: 600; margin-bottom: 3px; }
+    .isr-badge-text span { font-size: 0.82rem; color: var(--muted); }
+    .isr-badge-arrow { margin-left: auto; color: var(--sky); font-size: 1.2rem; }
+
+    /* ── SERVICES ── */
+    #services { background: var(--white); padding: 100px 5vw; }
+    .services-inner { max-width: 1200px; margin: 0 auto; }
+    .services-head { text-align: center; margin-bottom: 60px; }
+    .services-head p { font-size: 1.05rem; color: var(--muted); max-width: 580px; margin: 0 auto; line-height: 1.7; }
+
+    .service-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 60px; }
+    .scard {
+      background: var(--foam); border-radius: 18px; padding: 32px 28px;
+      border: 1px solid rgba(79,163,209,0.12);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .scard:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(11,31,58,0.1); }
+    .scard-icon {
+      width: 52px; height: 52px; background: var(--navy); border-radius: 14px;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 20px;
+    }
+    .scard-icon svg { width: 26px; height: 26px; fill: none; stroke: var(--aqua); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .scard h3 { font-family: var(--serif); font-size: 1.15rem; color: var(--navy); margin-bottom: 10px; font-weight: 700; }
+    .scard p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+
+    .pricing-band {
+      background: var(--navy); border-radius: 20px; padding: 48px;
+      display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center;
+    }
+    .pricing-band h3 { font-family: var(--serif); font-size: 1.5rem; color: var(--white); margin-bottom: 12px; }
+    .pricing-band p { color: rgba(255,255,255,0.65); font-size: 0.95rem; line-height: 1.7; }
+    .price-list { display: flex; flex-direction: column; gap: 12px; min-width: 220px; }
+    .price-item {
+      background: rgba(255,255,255,0.07); border-radius: var(--radius);
+      padding: 14px 18px; display: flex; justify-content: space-between; align-items: center;
+    }
+    .price-item span { font-size: 0.85rem; color: rgba(255,255,255,0.75); }
+    .price-item strong { font-size: 1.1rem; color: var(--white); font-family: var(--serif); }
+    .price-note { font-size: 0.78rem; color: var(--aqua); text-align: center; margin-top: 8px; }
+
+    /* ── CONTACT ── */
+    #contact { background: linear-gradient(160deg, var(--foam) 0%, var(--white) 100%); padding: 100px 5vw; }
+    .contact-inner { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .contact-info h2 { margin-bottom: 16px; }
+    .contact-info p { color: var(--muted); line-height: 1.75; font-size: 0.98rem; margin-bottom: 32px; }
+    .contact-detail {
+      display: flex; align-items: flex-start; gap: 14px; margin-bottom: 18px;
+    }
+    .detail-icon {
+      width: 40px; height: 40px; min-width: 40px; background: var(--navy); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .detail-icon svg { width: 18px; height: 18px; fill: none; stroke: var(--aqua); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .detail-text strong { display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 3px; }
+    .detail-text span { font-size: 0.95rem; color: var(--text); }
+    .detail-text a { color: var(--sky); }
+
+    /* form */
+    .contact-form { background: var(--white); border-radius: 20px; padding: 40px; box-shadow: var(--shadow); }
+    .contact-form h3 { font-family: var(--serif); font-size: 1.4rem; color: var(--navy); margin-bottom: 8px; }
+    .contact-form .form-sub { font-size: 0.88rem; color: var(--muted); margin-bottom: 28px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-group { display: flex; flex-direction: column; margin-bottom: 16px; }
+    .form-group label { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--navy); margin-bottom: 7px; }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      border: 1.5px solid #dde5ed; border-radius: 10px;
+      padding: 12px 14px; font-family: var(--sans); font-size: 0.92rem; color: var(--text);
+      background: var(--white); outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none; appearance: none;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--sky); box-shadow: 0 0 0 3px rgba(79,163,209,0.12);
+    }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-group select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235a6b7e' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+    .form-submit {
+      width: 100%; background: linear-gradient(135deg, var(--blue), var(--sky));
+      color: var(--white); border: none; border-radius: 50px; padding: 15px;
+      font-family: var(--sans); font-size: 0.98rem; font-weight: 500; cursor: pointer;
+      margin-top: 6px; transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 6px 20px rgba(26,74,122,0.3);
+    }
+    .form-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(26,74,122,0.4); }
+    .form-disclaimer { font-size: 0.75rem; color: var(--muted); text-align: center; margin-top: 12px; line-height: 1.5; }
+    .form-success {
+      display: none; background: #edfaf3; border: 1px solid #6dd5a2; border-radius: 10px;
+      padding: 16px; text-align: center; color: #1a6b42; font-size: 0.9rem; margin-top: 14px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy); color: rgba(255,255,255,0.6);
+      padding: 60px 5vw 32px;
+    }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; margin-bottom: 48px; }
+    .footer-brand img { height: 48px; width: 48px; object-fit: contain; margin-bottom: 14px; border-radius: 50%; background: rgba(255,255,255,0.06); }
+    .footer-brand p { font-size: 0.9rem; line-height: 1.7; max-width: 280px; }
+    .footer-brand .tagline { font-family: var(--serif); color: var(--white); font-size: 1rem; margin-bottom: 10px; }
+    .footer-col h4 { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--aqua); margin-bottom: 16px; font-weight: 600; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a { font-size: 0.88rem; color: rgba(255,255,255,0.6); transition: color 0.2s; }
+    .footer-col ul li a:hover { color: var(--white); }
+
+    .social-links { display: flex; gap: 12px; margin-top: 24px; }
+    .social-link {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.6); transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .social-link:hover { background: var(--sky); border-color: var(--sky); color: var(--white); }
+    .social-link svg { width: 16px; height: 16px; fill: currentColor; }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.08); padding-top: 28px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.8rem; flex-wrap: wrap; gap: 12px;
+    }
+    .footer-bottom a { color: var(--aqua); }
+
+    /* ── SCROLL ANIMATIONS ── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .hero-visual { order: -1; }
+      .hero-photo-wrap img { height: 300px; }
+      .hero-stat-card { bottom: -14px; left: 10px; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .service-cards { grid-template-columns: 1fr 1fr; }
+      .pricing-band { grid-template-columns: 1fr; }
+      .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+    @media (max-width: 640px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .service-cards { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .photo-carousel { grid-column: 1; }
+      .carousel-slide { flex: 0 0 88%; }
+      .footer-inner { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .pricing-band { padding: 28px; }
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       SUBMERGED WATERLINE EFFECT
+       ─────────────────────────────────────────────────────────────
+       The page reads as if it sits BENEATH a water surface. A fixed
+       "waterline" band lives near the top of the viewport. As the
+       user scrolls (descends), content rises toward that band, blurs
+       and refracts as it crosses it, then breaks through and exits.
+
+       Architecture (all layers are position:fixed so they never
+       trigger layout during scroll — everything rides the compositor):
+
+         #water-stage          full-viewport fixed container, no paint
+           .depth-tint         deepening blue gradient = sense of depth
+           .waterline-band     the glass strip near the top
+             .waterline-glass    backdrop-filter blur/refraction (mobile)
+             .waterline-displace true feDisplacementMap (desktop only)
+             .waterline-sheen    animated specular shimmer
+             .waterline-edge     crisp meniscus line + caustic glow
+           #ripple-canvas      scroll-velocity-driven ripple rings
+       ════════════════════════════════════════════════════════════ */
+
+    :root {
+      /* Waterline now sits at the very top of the viewport — no dead zone.
+         The nav lives at z-index 100 above the effect so it stays readable.
+         JS reads these via getComputedStyle to keep the canvas in sync. */
+      --waterline-y: 0px;
+      --waterline-h: 80px;   /* covers full nav height */
+    }
+
+    /* Effect container. Fixed + pointer-events:none means it overlays
+       content without ever intercepting taps/scrolls and never takes
+       part in document layout. */
+    #water-stage {
+      position: fixed;
+      inset: 0;
+      z-index: 90;            /* above content; nav (100) stays on top */
+      pointer-events: none;
+      overflow: hidden;
+      contain: strict;        /* isolate paints for cheaper compositing */
+    }
+
+    /* Depth tint: full-screen blue gradient selling the underwater depth.
+       Starts at the very top so there is zero bare strip above the nav. */
+    .depth-tint {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(11,31,58,0.18) 0%,       /* slight navy at the very top */
+        rgba(79,163,209,0.06) 40%,
+        rgba(26,74,122,0.10) 100%
+      );
+      mix-blend-mode: multiply;
+    }
+
+    /* Refractive surface band. translateZ(0) promotes it to its own GPU
+       layer so backdrop-filter is recomputed only for this thin strip,
+       not the whole screen. */
+    .waterline-band {
+      position: absolute;
+      left: 0; right: 0;
+      top: var(--waterline-y);
+      height: var(--waterline-h);
+      transform: translateZ(0);
+      will-change: transform;
+    }
+
+    /* MOBILE / default refraction: a glass strip. backdrop-filter blurs
+       and brightens content behind it; saturate reads as water density.
+       This cheap path holds 60fps on phones. Top/bottom mask feathers
+       the band so it has no hard rectangular edges. */
+    .waterline-glass {
+      position: absolute;
+      inset: 0;
+      backdrop-filter: blur(3px) saturate(1.15) brightness(1.06);
+      -webkit-backdrop-filter: blur(3px) saturate(1.15) brightness(1.06);
+      background: linear-gradient(
+        to bottom,
+        rgba(214,240,247,0.00) 0%,
+        rgba(116,205,224,0.18) 35%,
+        rgba(79,163,209,0.22) 65%,
+        rgba(214,240,247,0.00) 100%
+      );
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+      mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+    }
+
+    /* Crisp meniscus: a bright hairline at the exact waterline plus a
+       soft caustic glow beneath. This is what makes content look like it
+       is breaking the surface as it passes up through. */
+    .waterline-edge {
+      position: absolute;
+      left: 0; right: 0;
+      top: 0;
+      height: 3px;
+      background: linear-gradient(
+        to right,
+        rgba(255,255,255,0.0) 0%,
+        rgba(255,255,255,0.55) 20%,
+        rgba(214,240,247,0.85) 50%,
+        rgba(255,255,255,0.55) 80%,
+        rgba(255,255,255,0.0) 100%
+      );
+      box-shadow: 0 6px 22px rgba(116,205,224,0.45);
+      animation: surface-bob 5s ease-in-out infinite; /* never perfectly still */
+    }
+    @keyframes surface-bob {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(2px); }
+    }
+
+    /* Specular shimmer drifting along the surface. Wide soft highlight
+       animated purely via transform — essentially free on the GPU. */
+    .waterline-sheen {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        100deg,
+        transparent 30%,
+        rgba(255,255,255,0.10) 45%,
+        rgba(255,255,255,0.22) 50%,
+        rgba(255,255,255,0.10) 55%,
+        transparent 70%
+      );
+      mix-blend-mode: screen;
+      transform: translateX(-30%);
+      animation: sheen-drift 9s linear infinite;
+      -webkit-mask-image: linear-gradient(to bottom, transparent, #000 50%, transparent);
+      mask-image: linear-gradient(to bottom, transparent, #000 50%, transparent);
+    }
+    @keyframes sheen-drift {
+      0%   { transform: translateX(-40%); }
+      100% { transform: translateX(40%); }
+    }
+
+    /* Ripple canvas spans from the top of the page down past the
+       waterline so disturbances can radiate. Transparent; JS paints
+       short-lived rings whose size scales with scroll velocity. */
+    #ripple-canvas {
+      position: absolute;
+      left: 0; right: 0;
+      top: 0;
+      width: 100%;
+      pointer-events: none;
+    }
+
+    /* DESKTOP-ONLY true refraction. When JS detects a fine pointer
+       (mouse) + enough width it adds .displacement-on to <html>, which
+       swaps the cheap glass for an SVG feDisplacementMap-backed filter,
+       giving real pixel warping of the content behind. Hidden by
+       default; overscanned so the warp isn't clipped at the edges. */
+    .waterline-displace {
+      position: absolute;
+      inset: -20px 0;
+      display: none;
+    }
+    html.displacement-on .waterline-displace { display: block; }
+    /* On desktop, soften the cheap glass blur since the SVG handles the
+       heavy refraction — avoids a double-blurred look. */
+    html.displacement-on .waterline-glass {
+      backdrop-filter: saturate(1.12) brightness(1.05);
+      -webkit-backdrop-filter: saturate(1.12) brightness(1.05);
+    }
+
+    /* GRACEFUL DEGRADATION
+       ── prefers-reduced-motion: freeze surface animation, drop the
+          ripple canvas. The static glass band remains so the design
+          intent survives without motion.
+       ── html.water-lite (set by JS on slow/old devices): same idea —
+          keep only the static band.
+       ── browsers without backdrop-filter still get the translucent
+          gradient band, which alone reads as a waterline. */
+    @media (prefers-reduced-motion: reduce) {
+      .waterline-edge,
+      .waterline-sheen { animation: none !important; }
+      #ripple-canvas   { display: none !important; }
+    }
+    html.water-lite #ripple-canvas,
+    html.water-lite .waterline-sheen { display: none !important; }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════════════
+     SUBMERGED WATERLINE EFFECT — DOM LAYERS
+     All fixed-position, pointer-events:none. Sits above page content
+     (z-index 90) but below the nav (z-index 100). JS in the footer
+     drives the canvas ripples and toggles the desktop displacement.
+     ════════════════════════════════════════════════════════════════ -->
+
+<!-- Hidden SVG defining the turbulence + displacement filter used ONLY
+     on desktop. feTurbulence generates an animated fractal noise map;
+     feDisplacementMap uses that map's red/green channels to push the
+     backdrop pixels around, producing genuine liquid refraction. The
+     <animate> on baseFrequency makes the noise breathe so the surface
+     is alive rather than a frozen warp. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="waterDisplace" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.04"
+                    numOctaves="2" seed="7" result="noise">
+        <animate attributeName="baseFrequency"
+                 dur="14s" repeatCount="indefinite"
+                 values="0.012 0.04; 0.016 0.05; 0.012 0.04" />
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="noise"
+                         scale="14" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+  </defs>
+</svg>
+
+<div id="water-stage" aria-hidden="true">
+  <!-- overall depth gradient -->
+  <div class="depth-tint"></div>
+
+  <!-- ripple rings painted on scroll (canvas sized by JS) -->
+  <canvas id="ripple-canvas"></canvas>
+
+  <!-- the refractive surface band -->
+  <div class="waterline-band">
+    <!-- desktop-only true refraction: a backdrop-filtered pane warped by
+         the SVG filter above. Empty on purpose — it refracts whatever
+         content scrolls behind it. -->
+    <div class="waterline-displace" style="backdrop-filter: blur(1px); -webkit-backdrop-filter: blur(1px); filter: url(#waterDisplace);"></div>
+    <!-- cheap glass refraction (mobile + fallback) -->
+    <div class="waterline-glass"></div>
+    <!-- travelling specular shimmer -->
+    <div class="waterline-sheen"></div>
+    <!-- crisp surface line + caustic glow -->
+    <div class="waterline-edge"></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <img src="swim-for-vinny-logo.png"
+         alt="Swim For Vinny logo"
+         onerror="this.style.display='none'">
+    <div>
+      <span>ISR with Daphne</span>
+      <small>Swim For Vinny</small>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="#home">Home</a>
+    <a href="#about">Our Story</a>
+    <a href="#services">Lessons</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="#contact" class="nav-cta nav-links">Get Started</a>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMenu()">✕</button>
+  <a href="#home" onclick="toggleMenu()">Home</a>
+  <a href="#about" onclick="toggleMenu()">Our Story</a>
+  <a href="#services" onclick="toggleMenu()">Lessons</a>
+  <a href="#contact" onclick="toggleMenu()">Get Started</a>
+</div>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-water"></div>
+  <div class="ripple-container">
+    <div class="ripple"></div>
+    <div class="ripple"></div>
+    <div class="ripple"></div>
+    <div class="ripple"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-kicker">ISR Certified Instructor · Grayson County, KY</div>
+      <h1>
+        Every Child Deserves
+        <span>to Learn Water Survival.</span>
+      </h1>
+      <p class="hero-sub">1-on-1 survival swim lessons teaching infants and children to roll, float, and wait for rescue — and children 18 months and older to swim-float-swim. Starting at 6 months. In memory of Vinny.</p>
+      <div class="hero-badges">
+        <span class="badge">Ages 6 Months+</span>
+        <span class="badge">ISR Certified</span>
+        <span class="badge">Licensed & Insured</span>
+        <span class="badge">Swim-Float-Swim · 18 Months+</span>
+        <span class="badge">Grayson &amp; Surrounding Counties</span>
+      </div>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Register for Lessons</a>
+        <a href="#about" class="btn-outline">Our Story</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-photo-wrap">
+        <div class="hero-tag">Est. 2023</div>
+        <img src="isr-1.jpeg"
+             alt="Infant survival swim lesson"
+             loading="eager" />
+      </div>
+      <div class="hero-stat-card">
+        <strong>6 Weeks</strong>
+        <span>to a survival swimmer</span>
+      </div>
+    </div>
+  </div>
+  <!-- Van tucked inside the hero, above the wave z-index so the wave
+       covers its bottom edge and hides the PNG white edge cleanly -->
+  <img
+    class="hero-van"
+    src="https://raw.githubusercontent.com/caseykeown/swim-for-vinny/main/Swim%20For%20Vinny%20Transparent%20bg.png"
+    alt=""
+    aria-hidden="true"
+    loading="lazy"
+  />
+  <svg class="wave-bottom" viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#f5efe6" />
+  </svg>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p class="section-label">Our Story</p>
+      <h2>For Vinny, and <em>Every</em> Child After Him</h2>
+      <p>Vinny was 2.5 years old when he drowned on a family vacation. He had always used a puddle jumper in the pool — and he trusted it. When he got back to the water without it, he expected to float back up the way he always had. He thought he would be okay.</p>
+      <p>Children can drown in <strong>as little as 30 seconds.</strong> Vinny's story is the reason ISR with Daphne exists — because the ability to roll and float could have given him those lifesaving seconds.</p>
+      <p>ISR (Infant Swimming Resource) teaches children to self-rescue. If a child enters the water unexpectedly, they learn to roll to their back, float, and wait for help. It is the only research-based aquatic survival program of its kind.</p>
+      <p><strong>Daphne Mattingly</strong> is a certified ISR instructor serving Grayson and surrounding counties in Kentucky. Her sessions are always one-on-one — never group classes — because survival swimming is too important to leave to chance.</p>
+
+      <!-- ISR Certification certificate -->
+      <div class="cert-card reveal reveal-delay-1">
+        <div class="cert-card-header">
+          <svg viewBox="0 0 24 24"><path d="M12 15l-2 5-5-2 2-5"/><path d="M12 15l2 5 5-2-2-5"/><circle cx="12" cy="9" r="6"/></svg>
+          <span>ISR Certified Instructor — 2026</span>
+        </div>
+        <img
+          src="https://raw.githubusercontent.com/caseykeown/swim-for-vinny/main/2026-isr-cert.png"
+          alt="Daphne Mattingly 2026 ISR Certified Instructor certificate"
+          loading="lazy"
+        />
+      </div>
+    </div>
+    <div class="reveal reveal-delay-1">
+      <div class="vinny-card">
+        <blockquote>"He thought he would float back up since that's what always happened. The ability to float could have given him lifesaving seconds."</blockquote>
+        <cite>– In memory of Vinny, age 2.5</cite>
+      </div>
+      <div class="vinny-photo-card">
+        <img
+          src="https://raw.githubusercontent.com/caseykeown/swim-for-vinny/main/vinny.jpg"
+          alt="In memory of Vinny"
+          loading="lazy"
+        />
+        <div class="vinny-photo-caption">In memory of Vinny — the reason this program exists</div>
+      </div>
+    </div>
+    <div class="photo-carousel reveal">
+      <button class="carousel-btn prev" aria-label="Previous photo">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="carousel-btn next" aria-label="Next photo">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <div class="carousel-track" id="carouselTrack">
+        <!-- Slides are injected here by the gallery loader below.
+             Falls back to a loading state if gallery.json hasn't
+             been generated yet (first deploy before build script runs). -->
+        <div class="carousel-slide" id="galleryLoading" style="align-items:center; justify-content:center;">
+          <p style="color:rgba(255,255,255,0.4); font-size:0.9rem; padding:20px;">Loading gallery...</p>
+        </div>
+      </div>
+      <div class="carousel-dots" id="carouselDots"></div>
+      <p class="carousel-hint">Swipe to see more &rarr;</p>
+    </div>
+
+    <!-- TikTok videos are rendered dynamically by the gallery loader below
+         alongside photos, so all media comes from one source (gallery.json). -->
+    <div id="tiktokEmbeds" class="tiktok-row reveal" style="grid-column:1/-1; margin-top:48px; display:none;">
+      <p class="section-label" style="text-align:center; margin-bottom:20px;">From Daphne's TikTok</p>
+      <div class="tiktok-embeds" id="tiktokEmbedContainer"></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-inner">
+    <div class="services-head reveal">
+      <p class="section-label">Lessons &amp; Pricing</p>
+      <h2>How the Program <em>Works</em></h2>
+      <p>ISR lessons are short, consistent, and private. Most children complete their survival skill sequence in 6–8 weeks. Every lesson is one-on-one — Daphne and your child, no distractions.</p>
+    </div>
+    <div class="service-cards">
+      <div class="scard reveal">
+        <div class="scard-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <h3>Daily Consistency</h3>
+        <p>Lessons run 5 days a week for 6–8 weeks. Each session is approximately 10 minutes. The short, repeated exposure is the foundation of ISR's method.</p>
+      </div>
+      <div class="scard reveal reveal-delay-1">
+        <div class="scard-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2a9 9 0 100 18A9 9 0 0012 2z"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <h3>Roll-Float-Wait</h3>
+        <p>Your child learns to roll to their back if they enter the water, float independently, and wait for rescue — a skill sequence that can save their life.</p>
+      </div>
+      <div class="scard reveal reveal-delay-2">
+        <div class="scard-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <h3>1-on-1 Only</h3>
+        <p>No group classes, ever. Daphne works exclusively with one child at a time to ensure complete focus, proper technique, and individualized progress.</p>
+      </div>
+    </div>
+
+    <div class="pricing-band reveal">
+      <div>
+        <h3>Session Pricing</h3>
+        <p>ISR requires a one-time registration fee paid directly to Infant Swimming Resource. Lesson fees are separate and billed through Daphne. Returning students renew each season at a reduced rate.</p>
+        <p style="margin-top:12px; font-size:0.85rem; color: rgba(255,255,255,0.5);">Questions about registration or scheduling? Reach out via the contact form below.</p>
+      </div>
+      <div>
+        <div class="price-list">
+          <div class="price-item">
+            <span>ISR Registration Fee</span>
+            <strong>$105</strong>
+          </div>
+          <div class="price-item">
+            <span>Annual Renewal</span>
+            <strong>$40</strong>
+          </div>
+          <div class="price-item">
+            <span>Per Lesson</span>
+            <strong>$25</strong>
+          </div>
+          <div class="price-item">
+            <span>Full 6-Week Session</span>
+            <strong>$750</strong>
+          </div>
+        </div>
+        <p class="price-note">Starting at 6 months &amp; able to sit up independently</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-info reveal">
+      <p class="section-label">Enroll Your Child</p>
+      <h2>Ready to <em>Get Started?</em></h2>
+      <p>Use the form to reach Daphne directly. She'll respond by text or email to answer questions and get your child enrolled in the next available session.</p>
+      <div class="contact-detail">
+        <div class="detail-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.02 1.2 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+        </div>
+        <div class="detail-text">
+          <strong>Phone / Text</strong>
+          <span><a href="tel:2709254890">(270) 925-4890</a></span>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="detail-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div class="detail-text">
+          <strong>Email</strong>
+          <span><a href="mailto:daphne.mattingly@infantswim.com">daphne.mattingly@infantswim.com</a></span>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="detail-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="detail-text">
+          <strong>Service Area</strong>
+          <span>Grayson County &amp; surrounding counties, Kentucky</span>
+        </div>
+      </div>
+
+      <a href="https://locator.infantswim.com/?address=Clarkson%2C%20KY%2C%20USA&placeId=ChIJmbdwhz60aIgR65uVpcM6rf0"
+         target="_blank" rel="noopener"
+         style="display:inline-flex; align-items:center; gap:12px; margin-top:24px;
+                background:#edfaf7; border:1.5px solid #6dd5b8; border-radius:12px;
+                padding:12px 18px; text-decoration:none; transition:box-shadow 0.2s;"
+         onmouseover="this.style.boxShadow='0 4px 18px rgba(26,74,122,0.15)'"
+         onmouseout="this.style.boxShadow='none'">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+             stroke="#1a6b42" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        <div>
+          <strong style="display:block; font-size:0.82rem; color:#1a4a3a; letter-spacing:0.04em; text-transform:uppercase;">ISR Certified Instructor</strong>
+          <span style="font-size:0.8rem; color:#2d7a5f;">View on ISR Locator &rarr;</span>
+        </div>
+      </a>
+
+      <div class="social-links" style="margin-top:32px;">
+        <a href="https://www.facebook.com/people/ISR-with-Daphne-Swim-for-Vinny/100087626074883/" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@daphnemattingly?_r=1&_t=ZP-96xpczL9TcF" target="_blank" rel="noopener" class="social-link" aria-label="TikTok">
+          <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.82a8.21 8.21 0 004.79 1.53V6.89a4.85 4.85 0 01-1.02-.2z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="contact-form reveal reveal-delay-1">
+      <h3>Schedule a Lesson</h3>
+      <p class="form-sub">Fill out the form and Daphne will reach out within 24 hours.</p>
+      <form id="contactForm" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" name="fname" placeholder="Jane" required />
+          </div>
+          <div class="form-group">
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" name="lname" placeholder="Smith" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="jane@example.com" required />
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="(270) 000-0000" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="child_age">Child's Age</label>
+            <select id="child_age" name="child_age">
+              <option value="">Select age...</option>
+              <option>6–12 months</option>
+              <option>1 year</option>
+              <option>2 years</option>
+              <option>3 years</option>
+              <option>4 years</option>
+              <option>5+ years</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="county">County / Area</label>
+            <input type="text" id="county" name="county" placeholder="Grayson County" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="message">Questions or Notes</label>
+          <textarea id="message" name="message" placeholder="Any questions about the program, scheduling, or registration..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send My Registration Interest</button>
+        <p class="form-disclaimer">By submitting you agree to be contacted by Daphne via phone or email. Your info will never be shared.</p>
+      </form>
+      <div class="form-success" id="formSuccess">
+        Thank you! Daphne will be in touch within 24 hours to discuss enrollment.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="swim-for-vinny-logo.png"
+           alt="Swim For Vinny logo"
+           onerror="this.style.display='none'" />
+      <p class="tagline">ISR with Daphne – Swim For Vinny</p>
+      <p>Teaching infants and children to roll, float, and wait for rescue in Grayson County and surrounding communities in Kentucky. In memory of Vinny.</p>
+      <div class="social-links">
+        <a href="https://www.facebook.com/people/ISR-with-Daphne-Swim-for-Vinny/100087626074883/" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@daphnemattingly?_r=1&_t=ZP-96xpczL9TcF" target="_blank" rel="noopener" class="social-link" aria-label="TikTok">
+          <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.82a8.21 8.21 0 004.79 1.53V6.89a4.85 4.85 0 01-1.02-.2z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">Our Story</a></li>
+        <li><a href="#services">Lessons &amp; Pricing</a></li>
+        <li><a href="#contact">Register Now</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:2709254890">(270) 925-4890</a></li>
+        <li><a href="mailto:daphne.mattingly@infantswim.com">daphne.mattingly@infantswim.com</a></li>
+        <li><a href="https://www.infantswim.com" target="_blank" rel="noopener">ISR Official Site</a></li>
+        <li><a href="https://locator.infantswim.com/?address=Clarkson%2C%20KY%2C%20USA&placeId=ChIJmbdwhz60aIgR65uVpcM6rf0" target="_blank" rel="noopener">Find Daphne on ISR Locator</a></li>
+      </ul>
+      <p style="margin-top:16px; font-size:0.8rem; line-height:1.6;">
+        Grayson County &amp; surrounding counties, Kentucky<br/>
+        <span style="color: rgba(255,255,255,0.35);">Licensed &amp; Insured · Est. 2023</span>
+      </p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 ISR with Daphne – Swim For Vinny. All rights reserved.</span>
+    <span>Daphne Mattingly · <a href="mailto:daphne.mattingly@infantswim.com">daphne.mattingly@infantswim.com</a> · Website development <a href="mailto:me@caseykeown.com">me@caseykeown.com</a></span>
+  </div>
+</footer>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════
+   SUBMERGED WATERLINE — ENGINE
+   ────────────────────────────────────────────────────────────────────
+   Responsibilities:
+     1. Decide capability tier (reduced-motion / lite / full / desktop).
+     2. Keep the waterline band positioned under the nav on resize.
+     3. Read scroll position + velocity once per animation frame.
+     4. Spawn ripple rings whose size & count scale with scroll speed.
+     5. Animate & fade ripples on a single rAF loop (canvas, GPU-light).
+
+   Performance principles:
+     • Scroll handler does NOTHING but store the latest scrollY + a
+       timestamp (passive listener). All real work happens in the rAF
+       loop, so we never do layout/paint work synchronously on scroll.
+     • The loop is self-suspending: if there are no live ripples AND the
+       page is idle, it stops requesting frames and re-arms on the next
+       scroll. Idle pages cost zero CPU.
+     • Canvas is sized to devicePixelRatio (capped at 2) for crispness
+       without overdrawing on high-DPI phones.
+   ══════════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+
+  var root   = document.documentElement;
+  var stage  = document.getElementById('water-stage');
+  var canvas = document.getElementById('ripple-canvas');
+  if (!stage || !canvas) return;
+
+  /* ---- 1. Capability detection ----------------------------------- */
+  var reduceMotion = window.matchMedia &&
+                     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Rough low-power heuristic: very low core count is a decent proxy for
+  // an older phone. We keep the static band but skip canvas + shimmer.
+  var lowPower = (navigator.hardwareConcurrency || 4) <= 2;
+
+  if (lowPower && !reduceMotion) root.classList.add('water-lite');
+
+  // True SVG displacement only where it is safe: a fine pointer (mouse,
+  // i.e. desktop) AND a wide viewport. Touch devices never get it.
+  var finePointer = window.matchMedia &&
+                    window.matchMedia('(pointer: fine)').matches;
+  if (finePointer && window.innerWidth >= 1024 && !reduceMotion) {
+    root.classList.add('displacement-on');
+  }
+
+  // If the user has reduced-motion on, we are done: the CSS already
+  // froze animations and hid the canvas. Nothing dynamic to run.
+  if (reduceMotion) return;
+  // On lite devices we also skip the ripple engine entirely.
+  if (root.classList.contains('water-lite')) return;
+
+  /* ---- 2. Waterline geometry ------------------------------------- */
+  var ctx = canvas.getContext('2d', { alpha: true });
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  // Pull the waterline Y + band height from the CSS variables so the
+  // canvas and the visual band always agree on where "the surface" is.
+  function cssPx(name, fallback) {
+    var v = getComputedStyle(root).getPropertyValue(name).trim();
+    var n = parseFloat(v);
+    return isNaN(n) ? fallback : n;
+  }
+  var waterlineY = cssPx('--waterline-y', 96);
+
+  // Canvas covers the top region: from page top to a bit below the
+  // waterline, so ripples can radiate above and below the surface line.
+  var stageW = 0, stageH = 0;
+  function sizeCanvas() {
+    // Keep the band clear of the fixed nav on small screens by nudging
+    // the waterline down slightly if the nav is taller (it isn't here,
+    // but this keeps the math honest if the nav ever grows).
+    waterlineY = cssPx('--waterline-y', 96);
+    stageW = window.innerWidth;
+    stageH = Math.round(waterlineY + cssPx('--waterline-h', 64) + 80);
+    canvas.style.height = stageH + 'px';
+    canvas.width  = Math.round(stageW * dpr);
+    canvas.height = Math.round(stageH * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); // draw in CSS pixels
+  }
+  sizeCanvas();
+
+  /* ---- 3. Scroll sampling (cheap, passive) ----------------------- */
+  var lastY      = window.pageYOffset;
+  var curY       = lastY;
+  var velocity   = 0;      // px since last frame (smoothed)
+  var lastSpawn  = 0;      // accumulator gating ripple spawn rate
+  var running    = false;  // is the rAF loop currently armed?
+
+  function onScroll() {
+    curY = window.pageYOffset;
+    if (!running) startLoop();   // re-arm the loop if it had idled
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  window.addEventListener('resize', function () {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    sizeCanvas();
+    // Re-evaluate desktop displacement on orientation / window changes.
+    if (finePointer && window.innerWidth >= 1024) root.classList.add('displacement-on');
+    else root.classList.remove('displacement-on');
+  }, { passive: true });
+
+  /* ---- 4. Ripple model ------------------------------------------- */
+  // Each ripple is an expanding, fading ellipse centred on the waterline.
+  // Ellipse (wide, short) reads as a surface disturbance seen at a
+  // shallow angle rather than a flat-on circle.
+  var ripples = [];
+  var MAX_RIPPLES = 14; // hard cap protects against runaway counts
+
+  function spawnRipple(speed) {
+    if (ripples.length >= MAX_RIPPLES) return;
+    // Random x across the width; bias the size by scroll speed.
+    var x = Math.random() * stageW;
+    var power = Math.min(speed / 40, 1);        // 0..1 normalised speed
+    var maxR  = 40 + power * 160;               // faster scroll = bigger
+    ripples.push({
+      x: x,
+      y: waterlineY,
+      r: 6,
+      maxR: maxR,
+      life: 0,
+      ttl: 0.9 + power * 0.5,                   // seconds
+      alpha: 0.28 + power * 0.22
+    });
+  }
+
+  /* ---- 5. The single animation loop ------------------------------ */
+  var prevT = 0;
+  function frame(t) {
+    if (!prevT) prevT = t;
+    var dt = Math.min((t - prevT) / 1000, 0.05); // clamp dt (tab switches)
+    prevT = t;
+
+    // Smooth the velocity so a few stray fast frames don't over-spawn.
+    var raw = curY - lastY;
+    lastY = curY;
+    velocity += (Math.abs(raw) - velocity) * 0.4;
+
+    // Spawn ripples proportionally to speed. lastSpawn gates the rate so
+    // we emit a steady stream, not one-per-frame, during fast scrolls.
+    if (velocity > 2) {
+      lastSpawn += velocity * dt;
+      var threshold = 14;            // px of travel per ripple
+      while (lastSpawn > threshold) {
+        spawnRipple(velocity);
+        lastSpawn -= threshold;
+      }
+    }
+
+    // Clear and redraw live ripples.
+    ctx.clearRect(0, 0, stageW, stageH);
+    for (var i = ripples.length - 1; i >= 0; i--) {
+      var rp = ripples[i];
+      rp.life += dt;
+      var p = rp.life / rp.ttl;     // 0..1 progress
+      if (p >= 1) { ripples.splice(i, 1); continue; }
+
+      // Ease-out expansion; alpha fades with progress.
+      var ease = 1 - Math.pow(1 - p, 2);
+      var radius = rp.r + (rp.maxR - rp.r) * ease;
+      var a = rp.alpha * (1 - p);
+
+      // Draw as a thin bright ellipse (rx wide, ry short) = ripple ring.
+      ctx.beginPath();
+      ctx.ellipse(rp.x, rp.y, radius, radius * 0.32, 0, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(214,240,247,' + a.toFixed(3) + ')';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      // A fainter inner ring adds depth to each disturbance.
+      if (radius > 24) {
+        ctx.beginPath();
+        ctx.ellipse(rp.x, rp.y, radius * 0.6, radius * 0.6 * 0.32, 0, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(116,205,224,' + (a * 0.6).toFixed(3) + ')';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+    }
+
+    // Self-suspend: if nothing is moving and no ripples remain, stop the
+    // loop to drop CPU to zero. onScroll re-arms it.
+    if (ripples.length === 0 && velocity < 0.5) {
+      running = false;
+      prevT = 0;
+      ctx.clearRect(0, 0, stageW, stageH);
+      return;
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function startLoop() {
+    if (running) return;
+    running = true;
+    prevT = 0;
+    requestAnimationFrame(frame);
+  }
+
+  // Kick once so the first scroll feels instant.
+  startLoop();
+})();
+</script>
+
+<script>
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // Form submit
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('.form-submit');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+    setTimeout(() => {
+      this.style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    }, 800);
+  });
+
+  // Lazy-load image fallback: hide broken images gracefully
+  document.querySelectorAll('img').forEach(img => {
+    img.addEventListener('error', function() {
+      this.style.opacity = '0';
+      if (this.closest('.carousel-slide')) this.closest('.carousel-slide').style.background = '#0e3259';
+      if (this.closest('.hero-photo-wrap')) this.closest('.hero-photo-wrap').style.minHeight = '300px';
+    });
+  });
+
+  /* ── PHOTO CAROUSEL CONTROLS ──
+     Exposed as window.initCarousel so the gallery loader can call it
+     after dynamically injecting slides from gallery.json. */
+  window.initCarousel = function () {
+    var track = document.getElementById('carouselTrack');
+    var dotsWrap = document.getElementById('carouselDots');
+    if (!track || !dotsWrap) return;
+
+    // Clear any previously built dots (in case called more than once)
+    dotsWrap.innerHTML = '';
+
+    var slides = Array.prototype.slice.call(track.querySelectorAll('.carousel-slide'));
+    if (!slides.length) return;
+
+    // Build one dot per slide; clicking a dot scrolls that slide into view.
+    var dots = slides.map(function (slide, i) {
+      var b = document.createElement('button');
+      b.setAttribute('aria-label', 'Go to photo ' + (i + 1));
+      b.addEventListener('click', function () {
+        slide.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      });
+      dotsWrap.appendChild(b);
+      return b;
+    });
+
+    // Mark the dot whose slide is nearest the track's horizontal centre.
+    function updateActive() {
+      var trackRect = track.getBoundingClientRect();
+      var center = trackRect.left + trackRect.width / 2;
+      var best = 0, bestDist = Infinity;
+      slides.forEach(function (s, i) {
+        var r = s.getBoundingClientRect();
+        var d = Math.abs((r.left + r.width / 2) - center);
+        if (d < bestDist) { bestDist = d; best = i; }
+      });
+      dots.forEach(function (d, i) { d.classList.toggle('active', i === best); });
+    }
+
+    // Arrow buttons: scroll by roughly one slide width each click.
+    function scrollByOne(dir) {
+      var amount = slides[0].getBoundingClientRect().width + 16;
+      track.scrollBy({ left: dir * amount, behavior: 'smooth' });
+    }
+    var prev = document.querySelector('.carousel-btn.prev');
+    var next = document.querySelector('.carousel-btn.next');
+    if (prev) { prev.onclick = function () { scrollByOne(-1); }; }
+    if (next) { next.onclick = function () { scrollByOne(1); }; }
+
+    // Throttle scroll updates to one per frame for smoothness.
+    var ticking = false;
+    track.addEventListener('scroll', function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { updateActive(); ticking = false; });
+    }, { passive: true });
+
+    updateActive();
+    window.addEventListener('resize', updateActive, { passive: true });
+  };
+</script>
+
+<!-- ── GALLERY LOADER ─────────────────────────────────────────────
+     Fetches gallery.json (generated by build-gallery.js at deploy time)
+     and builds carousel slides + TikTok embeds dynamically.
+     Falls back gracefully if gallery.json isn't available yet.
+     ────────────────────────────────────────────────────────────── -->
+<script>
+(function () {
+  var track    = document.getElementById('carouselTrack');
+  var loading  = document.getElementById('galleryLoading');
+  var tiktokEl = document.getElementById('tiktokEmbeds');
+  var tiktokContainer = document.getElementById('tiktokEmbedContainer');
+  if (!track) return;
+
+  // Extract TikTok video ID from a URL
+  function tiktokId(url) {
+    var m = url.match(/\/video\/(\d+)/);
+    return m ? m[1] : null;
+  }
+
+  function buildCarousel(items) {
+    // Remove loading placeholder
+    if (loading) loading.remove();
+
+    var photos = items.filter(function(i) { return i.type !== 'video' && i.published !== false; });
+    var videos = items.filter(function(i) { return i.type === 'video' && i.published !== false; });
+
+    // Build photo slides
+    photos.forEach(function (item) {
+      var slide = document.createElement('div');
+      slide.className = 'carousel-slide';
+      var img = document.createElement('img');
+      img.src = item.photo;
+      img.alt = item.title || 'ISR swim lesson';
+      img.loading = 'lazy';
+      slide.appendChild(img);
+      track.appendChild(slide);
+    });
+
+    // Build TikTok embeds section if any video items exist
+    if (videos.length && tiktokEl && tiktokContainer) {
+      videos.forEach(function (item) {
+        var id = tiktokId(item.video_url || '');
+        if (!id) return;
+        var bq = document.createElement('blockquote');
+        bq.className = 'tiktok-embed';
+        bq.setAttribute('cite', item.video_url);
+        bq.setAttribute('data-video-id', id);
+        bq.style.cssText = 'max-width:325px; min-width:280px;';
+        bq.innerHTML = '<section></section>';
+        tiktokContainer.appendChild(bq);
+      });
+      tiktokEl.style.display = '';
+
+      // Load TikTok embed script once
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.tiktok.com/embed.js';
+      document.body.appendChild(s);
+    }
+
+    // Re-run the existing carousel controls now that slides exist
+    if (typeof initCarousel === 'function') initCarousel();
+  }
+
+  // Fetch gallery.json produced by the build script.
+  // If it doesn't exist yet (pre-build first deploy), use fallback.
+  fetch('/gallery.json')
+    .then(function (r) {
+      if (!r.ok) throw new Error('no gallery.json');
+      return r.json();
+    })
+    .then(buildCarousel)
+    .catch(function () {
+      // gallery.json not available — show a static fallback set
+      // so the site never shows a blank carousel
+      buildCarousel([
+        { type:'photo', photo:'isr-1.jpeg', title:'ISR lesson', published:true },
+        { type:'photo', photo:'isr-2.jpeg', title:'ISR lesson', published:true },
+        { type:'photo', photo:'isr-3.jpeg', title:'ISR lesson', published:true },
+        { type:'photo', photo:'isr-4.jpeg', title:'ISR lesson', published:true },
+        { type:'photo', photo:'isr-5.jpeg', title:'ISR lesson', published:true },
+        { type:'photo', photo:'isr-6.jpeg', title:'ISR lesson', published:true },
+        { type:'photo', photo:'isr-7.png',  title:'ISR lesson', published:true },
+        { type:'photo', photo:'isr-8.png',  title:'ISR lesson', published:true },
+        { type:'photo', photo:'https://raw.githubusercontent.com/caseykeown/swim-for-vinny/main/Daphne-baby-in-water.png', title:'Daphne with baby', published:true },
+        { type:'video', video_url:'https://www.tiktok.com/@daphnemattingly/video/7643985709199658271', title:'TikTok', published:true },
+        { type:'video', video_url:'https://www.tiktok.com/@daphnemattingly/video/7639901780742081822', title:'TikTok', published:true },
+      ]);
+    });
+})();
+</script>
+
+</body>
+</html>
