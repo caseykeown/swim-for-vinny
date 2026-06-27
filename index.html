@@ -1016,59 +1016,22 @@
         <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
       <div class="carousel-track" id="carouselTrack">
-        <div class="carousel-slide">
-          <img src="isr-2.jpeg" alt="Daphne guiding an infant in an ISR survival swim lesson" loading="lazy" />
-        </div>
-        <div class="carousel-slide">
-          <img src="isr-3.jpeg" alt="Child learning to back float during a survival swim lesson" loading="lazy" />
-        </div>
-        <div class="carousel-slide">
-          <img src="isr-4.jpeg" alt="ISR lesson in progress in the water" loading="lazy" />
-        </div>
-        <div class="carousel-slide">
-          <img src="isr-5.jpeg" alt="Infant swimming lesson in Kentucky" loading="lazy" />
-        </div>
-        <div class="carousel-slide">
-          <img src="isr-6.jpeg" alt="Baby swim lesson in Grayson County" loading="lazy" />
-        </div>
-        <div class="carousel-slide">
-          <img src="isr-7.png" alt="ISR survival swim instruction" loading="lazy" />
-        </div>
-        <div class="carousel-slide">
-          <img src="isr-8.png" alt="Daphne working with a child in the water" loading="lazy" />
-        </div>
-        <div class="carousel-slide">
-          <img
-            src="https://raw.githubusercontent.com/caseykeown/swim-for-vinny/main/Daphne-baby-in-water.png"
-            alt="Daphne guiding a baby through an ISR survival swim lesson"
-            loading="lazy"
-          />
+        <!-- Slides are injected here by the gallery loader below.
+             Falls back to a loading state if gallery.json hasn't
+             been generated yet (first deploy before build script runs). -->
+        <div class="carousel-slide" id="galleryLoading" style="align-items:center; justify-content:center;">
+          <p style="color:rgba(255,255,255,0.4); font-size:0.9rem; padding:20px;">Loading gallery...</p>
         </div>
       </div>
       <div class="carousel-dots" id="carouselDots"></div>
       <p class="carousel-hint">Swipe to see more &rarr;</p>
     </div>
 
-    <!-- TikTok Videos -->
-    <div class="tiktok-row reveal" style="grid-column:1/-1; margin-top:48px;">
+    <!-- TikTok videos are rendered dynamically by the gallery loader below
+         alongside photos, so all media comes from one source (gallery.json). -->
+    <div id="tiktokEmbeds" class="tiktok-row reveal" style="grid-column:1/-1; margin-top:48px; display:none;">
       <p class="section-label" style="text-align:center; margin-bottom:20px;">From Daphne's TikTok</p>
-      <div class="tiktok-embeds">
-        <blockquote
-          class="tiktok-embed"
-          cite="https://www.tiktok.com/@daphnemattingly/video/7643985709199658271"
-          data-video-id="7643985709199658271"
-          style="max-width:325px; min-width:280px;">
-          <section></section>
-        </blockquote>
-        <blockquote
-          class="tiktok-embed"
-          cite="https://www.tiktok.com/@daphnemattingly/video/7639901780742081822"
-          data-video-id="7639901780742081822"
-          style="max-width:325px; min-width:280px;">
-          <section></section>
-        </blockquote>
-      </div>
-      <script async src="https://www.tiktok.com/embed.js"></script>
+      <div class="tiktok-embeds" id="tiktokEmbedContainer"></div>
     </div>
   </div>
 </section>
@@ -1539,14 +1502,15 @@
   });
 
   /* ── PHOTO CAROUSEL CONTROLS ──
-     The swiping itself is pure CSS scroll-snap (works with zero JS).
-     This only adds: prev/next arrow buttons for mouse users, dot
-     indicators, and syncing the active dot to whichever slide is
-     currently centred in the track. */
-  (function () {
+     Exposed as window.initCarousel so the gallery loader can call it
+     after dynamically injecting slides from gallery.json. */
+  window.initCarousel = function () {
     var track = document.getElementById('carouselTrack');
     var dotsWrap = document.getElementById('carouselDots');
     if (!track || !dotsWrap) return;
+
+    // Clear any previously built dots (in case called more than once)
+    dotsWrap.innerHTML = '';
 
     var slides = Array.prototype.slice.call(track.querySelectorAll('.carousel-slide'));
     if (!slides.length) return;
@@ -1577,13 +1541,13 @@
 
     // Arrow buttons: scroll by roughly one slide width each click.
     function scrollByOne(dir) {
-      var amount = slides[0].getBoundingClientRect().width + 16; // slide + gap
+      var amount = slides[0].getBoundingClientRect().width + 16;
       track.scrollBy({ left: dir * amount, behavior: 'smooth' });
     }
     var prev = document.querySelector('.carousel-btn.prev');
     var next = document.querySelector('.carousel-btn.next');
-    if (prev) prev.addEventListener('click', function () { scrollByOne(-1); });
-    if (next) next.addEventListener('click', function () { scrollByOne(1); });
+    if (prev) { prev.onclick = function () { scrollByOne(-1); }; }
+    if (next) { next.onclick = function () { scrollByOne(1); }; }
 
     // Throttle scroll updates to one per frame for smoothness.
     var ticking = false;
@@ -1595,7 +1559,99 @@
 
     updateActive();
     window.addEventListener('resize', updateActive, { passive: true });
-  })();
+  };
+</script>
+
+<!-- ── GALLERY LOADER ─────────────────────────────────────────────
+     Fetches gallery.json (generated by build-gallery.js at deploy time)
+     and builds carousel slides + TikTok embeds dynamically.
+     Falls back gracefully if gallery.json isn't available yet.
+     ────────────────────────────────────────────────────────────── -->
+<script>
+(function () {
+  var track    = document.getElementById('carouselTrack');
+  var loading  = document.getElementById('galleryLoading');
+  var tiktokEl = document.getElementById('tiktokEmbeds');
+  var tiktokContainer = document.getElementById('tiktokEmbedContainer');
+  if (!track) return;
+
+  // Extract TikTok video ID from a URL
+  function tiktokId(url) {
+    var m = url.match(/\/video\/(\d+)/);
+    return m ? m[1] : null;
+  }
+
+  function buildCarousel(items) {
+    // Remove loading placeholder
+    if (loading) loading.remove();
+
+    var photos = items.filter(function(i) { return i.type !== 'video' && i.published !== false; });
+    var videos = items.filter(function(i) { return i.type === 'video' && i.published !== false; });
+
+    // Build photo slides
+    photos.forEach(function (item) {
+      var slide = document.createElement('div');
+      slide.className = 'carousel-slide';
+      var img = document.createElement('img');
+      img.src = item.photo;
+      img.alt = item.title || 'ISR swim lesson';
+      img.loading = 'lazy';
+      slide.appendChild(img);
+      track.appendChild(slide);
+    });
+
+    // Build TikTok embeds section if any video items exist
+    if (videos.length && tiktokEl && tiktokContainer) {
+      videos.forEach(function (item) {
+        var id = tiktokId(item.video_url || '');
+        if (!id) return;
+        var bq = document.createElement('blockquote');
+        bq.className = 'tiktok-embed';
+        bq.setAttribute('cite', item.video_url);
+        bq.setAttribute('data-video-id', id);
+        bq.style.cssText = 'max-width:325px; min-width:280px;';
+        bq.innerHTML = '<section></section>';
+        tiktokContainer.appendChild(bq);
+      });
+      tiktokEl.style.display = '';
+
+      // Load TikTok embed script once
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.tiktok.com/embed.js';
+      document.body.appendChild(s);
+    }
+
+    // Re-run the existing carousel controls now that slides exist
+    if (typeof initCarousel === 'function') initCarousel();
+  }
+
+  // Fetch gallery.json produced by the build script.
+  // If it doesn't exist yet (pre-build first deploy), use fallback.
+  fetch('/gallery.json')
+    .then(function (r) {
+      if (!r.ok) throw new Error('no gallery.json');
+      return r.json();
+    })
+    .then(buildCarousel)
+    .catch(function () {
+      // gallery.json not available — show a static fallback set
+      // so the site never shows a blank carousel
+      buildCarousel([
+        { type:'photo', photo:'isr-1.jpeg', title:'ISR lesson', published:true },
+        { type:'photo', photo:'isr-2.jpeg', title:'ISR lesson', published:true },
+        { type:'photo', photo:'isr-3.jpeg', title:'ISR lesson', published:true },
+        { type:'photo', photo:'isr-4.jpeg', title:'ISR lesson', published:true },
+        { type:'photo', photo:'isr-5.jpeg', title:'ISR lesson', published:true },
+        { type:'photo', photo:'isr-6.jpeg', title:'ISR lesson', published:true },
+        { type:'photo', photo:'isr-7.png',  title:'ISR lesson', published:true },
+        { type:'photo', photo:'isr-8.png',  title:'ISR lesson', published:true },
+        { type:'photo', photo:'https://raw.githubusercontent.com/caseykeown/swim-for-vinny/main/Daphne-baby-in-water.png', title:'Daphne with baby', published:true },
+        { type:'video', video_url:'https://www.tiktok.com/@daphnemattingly/video/7643985709199658271', title:'TikTok', published:true },
+        { type:'video', video_url:'https://www.tiktok.com/@daphnemattingly/video/7639901780742081822', title:'TikTok', published:true },
+      ]);
+    });
+})();
 </script>
 
 </body>
