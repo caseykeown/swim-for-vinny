@@ -5,15 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex" />
   <title>ISR with Daphne — Content Manager</title>
-  <style>
-    body { margin: 0; font-family: sans-serif; }
-  </style>
 </head>
 <body>
-  <!-- Decap CMS — loads the full admin UI from the CDN.
-       No build step required. The config.yml in this same
-       directory tells it which fields to show Daphne and
-       where to write the data. -->
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <!-- Sveltia CMS: drop-in replacement for Decap CMS that handles
+       Cloudflare Workers OAuth correctly without window.opener issues.
+       Uses the same config.yml format as Decap — no config changes needed. -->
+  <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
 </body>
 </html>
