@@ -1,0 +1,8 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "swim-for-vinny",
+  "compatibility_date": "2026-06-28",
+  "assets": {
+    "directory": "."
+  }
+}
