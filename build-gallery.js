@@ -1,30 +1,17 @@
 #!/usr/bin/env node
 /**
  * build-gallery.js
- *
- * Cloudflare Pages calls this as the build command:
- *   node build-gallery.js
- *
- * It reads every markdown file in _gallery/, parses the YAML
- * front matter, and writes a single gallery.json that the
- * carousel JS reads at page load. Only items with published: true
- * (or published omitted) are included.
- *
- * This means:
- *   - Daphne uploads a photo via /admin
- *   - Decap commits a new .md file to _gallery/
- *   - Cloudflare Pages sees the commit and runs this script
- *   - gallery.json is updated, carousel reflects the new photo
- *   - No manual code edits required ever again
+ * Reads _gallery/ markdown files and injects gallery data directly
+ * into index.html as an inline script variable — no separate JSON
+ * file needed, no static file serving issues.
  */
 
 const fs   = require('fs');
 const path = require('path');
 
-const GALLERY_DIR = path.join(__dirname, '_gallery');
-const OUTPUT_FILE = path.join(__dirname, 'gallery.json');
+const GALLERY_DIR  = path.join(__dirname, '_gallery');
+const INDEX_FILE   = path.join(__dirname, 'index.html');
 
-// Minimal YAML front-matter parser (no dependencies)
 function parseFrontMatter(content) {
   const match = content.match(/^---\n([\s\S]*?)\n---/);
   if (!match) return {};
@@ -35,12 +22,10 @@ function parseFrontMatter(content) {
     if (colonIdx === -1) return;
     const key = line.slice(0, colonIdx).trim();
     let val = line.slice(colonIdx + 1).trim();
-    // Remove surrounding quotes
     if ((val.startsWith('"') && val.endsWith('"')) ||
         (val.startsWith("'") && val.endsWith("'"))) {
       val = val.slice(1, -1);
     }
-    // Parse booleans
     if (val === 'true')  val = true;
     if (val === 'false') val = false;
     result[key] = val;
@@ -48,8 +33,6 @@ function parseFrontMatter(content) {
   return result;
 }
 
-// Read existing hardcoded slides as the base set
-// so existing photos are still present before Daphne adds any
 const HARDCODED = [
   { type: 'photo', photo: 'isr-1.jpeg',  title: 'ISR lesson', published: true },
   { type: 'photo', photo: 'isr-2.jpeg',  title: 'ISR lesson', published: true },
@@ -79,16 +62,28 @@ const HARDCODED = [
   },
 ];
 
-// Collect CMS-managed items
 let cmsItems = [];
 if (fs.existsSync(GALLERY_DIR)) {
   const files = fs.readdirSync(GALLERY_DIR).filter(f => f.endsWith('.md'));
-  files.sort(); // chronological by filename (YYYY-MM-DD prefix)
+  files.sort();
   cmsItems = files
     .map(f => parseFrontMatter(fs.readFileSync(path.join(GALLERY_DIR, f), 'utf8')))
-    .filter(item => item.published !== false);
+    .filter(item => item.published !== false && (item.photo || item.video_url));
 }
 
 const allItems = [...HARDCODED, ...cmsItems];
-fs.writeFileSync(OUTPUT_FILE, JSON.stringify(allItems, null, 2));
-console.log(`gallery.json written: ${allItems.length} items (${cmsItems.length} from CMS)`);
+
+// Read index.html and inject gallery data as an inline script
+let html = fs.readFileSync(INDEX_FILE, 'utf8');
+
+const galleryScript = `<script>window.__GALLERY_DATA__ = ${JSON.stringify(allItems)};</script>`;
+
+// Replace existing injected data if present, otherwise inject before </head>
+if (html.includes('window.__GALLERY_DATA__')) {
+  html = html.replace(/<script>window\.__GALLERY_DATA__[\s\S]*?<\/script>/, galleryScript);
+} else {
+  html = html.replace('</head>', galleryScript + '\n</head>');
+}
+
+fs.writeFileSync(INDEX_FILE, html);
+console.log(`Injected ${allItems.length} gallery items into index.html (${cmsItems.length} from CMS)`);
