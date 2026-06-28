@@ -1,36 +1,18 @@
-# ─────────────────────────────────────────────────────────────
-# DECAP CMS CONFIG — ISR with Daphne
-# ─────────────────────────────────────────────────────────────
-# backend: uses GitHub as the content store.
-# OAuth is handled by the separate Cloudflare Worker (cms-auth).
-# When Daphne saves, Decap commits the file straight to the repo,
-# which triggers a Cloudflare Pages rebuild automatically.
-# ─────────────────────────────────────────────────────────────
-
 backend:
   name: github
-  repo: caseykeown/swim-for-vinny   # GitHub owner/repo
+  repo: caseykeown/swim-for-vinny
   branch: main
-  # Point at your deployed cms-auth Cloudflare Worker URL.
-  # Replace the placeholder below with the actual worker URL
-  # after you deploy the OAuth worker (Step 2 in the README).
   base_url: https://cms-auth.iluvprimitives.workers.dev
+  auth_endpoint: /auth
 
-# Where uploaded images get stored in the repo
 media_folder: "uploads"
 public_folder: "/uploads"
 
-# ─────────────────────────────────────────────────────────────
-# COLLECTIONS
-# Daphne only sees ONE thing: her photo/video gallery.
-# Keeping it scoped to one collection means the admin screen
-# is clean — she's not confronted with site-wide CMS controls.
-# ─────────────────────────────────────────────────────────────
 collections:
   - name: "gallery"
     label: "Photo & Video Gallery"
     label_singular: "Gallery Item"
-    description: "Add photos or videos to the gallery on your website. They'll appear automatically after you save."
+    description: "Add photos or videos to your gallery. They will appear on your website automatically after you save."
     folder: "_gallery"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
@@ -40,7 +22,7 @@ collections:
       - label: "Title / Caption"
         name: "title"
         widget: "string"
-        hint: "A short description of the photo or video (e.g. 'Baby back float lesson')"
+        hint: "A short description (e.g. Baby back float lesson)"
 
       - label: "Type"
         name: "type"
@@ -60,10 +42,9 @@ collections:
         name: "video_url"
         widget: "string"
         required: false
-        hint: "Paste a TikTok or YouTube URL here. Leave blank if this is a photo."
+        hint: "Paste a TikTok or YouTube URL. Leave blank if this is a photo."
 
       - label: "Show on website"
         name: "published"
         widget: "boolean"
         default: true
-        hint: "Uncheck to hide this item without deleting it."
