@@ -3,3 +3,8 @@ cms oauth.txt
 files.zip 
 photos.zip 
 files/ 
+
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
