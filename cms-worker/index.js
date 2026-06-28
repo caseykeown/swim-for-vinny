@@ -1,35 +1,31 @@
 /**
  * cms-auth — Cloudflare Worker
  * GitHub OAuth proxy for Decap CMS.
- *
- * This Worker handles two endpoints:
- *   GET /auth        — redirects the user to GitHub's OAuth login page
- *   GET /callback    — GitHub redirects here after login; this exchanges
- *                      the code for a token and posts it back to Decap CMS
- *                      via window.postMessage so the admin UI can proceed.
- *
- * Environment variables (set in Cloudflare Workers dashboard under
- * Settings → Variables and Secrets — mark both as Secret):
- *   GITHUB_CLIENT_ID      — from your GitHub OAuth App
- *   GITHUB_CLIENT_SECRET  — from your GitHub OAuth App
+ * Uses the standard popup/postMessage flow that Decap expects.
  */
-
-const ALLOWED_ORIGINS = [
-  'https://isrwithdaphne.com',
-  'https://www.isrwithdaphne.com',
-];
 
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
+    // CORS headers for all responses
+    const corsHeaders = {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    };
+
+    if (request.method === 'OPTIONS') {
+      return new Response(null, { headers: corsHeaders });
+    }
+
     // ── /auth ──────────────────────────────────────────────────
-    // Step 1: send the user to GitHub to approve access
     if (url.pathname === '/auth') {
       const params = new URLSearchParams({
         client_id: env.GITHUB_CLIENT_ID,
         scope: 'repo,user',
         redirect_uri: `${url.origin}/callback`,
+        state: Math.random().toString(36).substring(7),
       });
       return Response.redirect(
         `https://github.com/login/oauth/authorize?${params}`,
@@ -38,23 +34,21 @@ export default {
     }
 
     // ── /callback ──────────────────────────────────────────────
-    // Step 2: GitHub sends the user back here with a short-lived code.
-    // Exchange it for a real access token, then post it back to the
-    // Decap CMS window via postMessage so it can make GitHub API calls.
     if (url.pathname === '/callback') {
       const code = url.searchParams.get('code');
+
       if (!code) {
         return new Response('Missing code parameter', { status: 400 });
       }
 
-      // Exchange the code for a token
+      // Exchange code for token
       const tokenRes = await fetch(
         'https://github.com/login/oauth/access_token',
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Accept: 'application/json',
+            'Accept': 'application/json',
           },
           body: JSON.stringify({
             client_id: env.GITHUB_CLIENT_ID,
@@ -65,55 +59,20 @@ export default {
         }
       );
 
-      const tokenData = await tokenRes.json();
+      const data = await tokenRes.json();
 
-      if (tokenData.error) {
-        return new Response(`GitHub OAuth error: ${tokenData.error_description}`, {
-          status: 400,
-        });
+      if (data.error || !data.access_token) {
+        const msg = data.error_description || data.error || 'Unknown error';
+        return sendMessage('error', msg);
       }
 
-      const token = tokenData.access_token;
-      const provider = 'github';
-
-      // Decap CMS listens for a postMessage from the OAuth popup.
-      // This page closes itself after sending the token.
-      const html = `<!DOCTYPE html>
-<html>
-<head><title>Authenticating...</title></head>
-<body>
-<p>Authenticating, please wait...</p>
-<script>
-  (function () {
-    function receiveMessage(e) {
-      console.log('cms-auth: received message from', e.origin);
-    }
-    window.addEventListener('message', receiveMessage, false);
-
-    // Send the token back to the Decap CMS opener window
-    const token = ${JSON.stringify(token)};
-    const provider = ${JSON.stringify(provider)};
-    const message = 'authorization:' + provider + ':success:' + JSON.stringify({ token, provider });
-
-    // Try to find the opener — works for popup flow
-    if (window.opener) {
-      window.opener.postMessage(message, '*');
-      window.close();
-    } else {
-      // Fallback: redirect back with token in hash (implicit flow)
-      document.body.innerHTML = '<p>Authentication complete. You can close this window.</p>';
-    }
-  })();
-</script>
-</body>
-</html>`;
-
-      return new Response(html, {
-        headers: { 'Content-Type': 'text/html' },
-      });
+      return sendMessage('success', JSON.stringify({
+        token: data.access_token,
+        provider: 'github',
+      }));
     }
 
-    // Health check
+    // ── health check ───────────────────────────────────────────
     if (url.pathname === '/') {
       return new Response('cms-auth worker is running 👋', { status: 200 });
     }
@@ -121,3 +80,53 @@ export default {
     return new Response('Not found', { status: 404 });
   },
 };
+
+/**
+ * Sends a postMessage to the Decap CMS opener window.
+ * Decap listens for: "authorization:github:success:{...}"
+ */
+function sendMessage(status, content) {
+  const message = status === 'success'
+    ? `authorization:github:success:${content}`
+    : `authorization:github:error:${content}`;
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>${status === 'success' ? 'Authenticated' : 'Auth Error'}</title>
+</head>
+<body>
+  <p>${status === 'success' ? 'Login successful, closing...' : 'Error: ' + content}</p>
+  <script>
+    (function() {
+      var message = ${JSON.stringify(message)};
+      var targetOrigin = '*';
+
+      function send() {
+        if (window.opener && !window.opener.closed) {
+          window.opener.postMessage(message, targetOrigin);
+          setTimeout(function() { window.close(); }, 500);
+        } else {
+          // No opener found - show manual close message
+          document.body.innerHTML = '<p>Authentication complete. Please close this window and refresh the admin page.</p>';
+        }
+      }
+
+      // Wait briefly for the opener to be ready
+      if (document.readyState === 'complete') {
+        setTimeout(send, 300);
+      } else {
+        window.addEventListener('load', function() {
+          setTimeout(send, 300);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>`;
+
+  return new Response(html, {
+    headers: { 'Content-Type': 'text/html' },
+  });
+}
