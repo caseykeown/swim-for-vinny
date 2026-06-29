@@ -410,9 +410,11 @@
       gap: 16px;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;   /* momentum scroll on iOS */
+      -webkit-overflow-scrolling: touch;
       padding: 4px 4px 18px;
-      scrollbar-width: none;                /* Firefox: hide scrollbar */
+      scrollbar-width: none;
+      /* Extra padding on the right lets the last slide scroll fully into center */
+      padding-right: max(4px, calc((100% - min(82vw, 520px)) / 2));
     }
     .carousel-track::-webkit-scrollbar { display: none; } /* WebKit: hide */
 
