@@ -40,34 +40,12 @@ function parseFrontMatter(rawContent) {
   return result;
 }
 
-const HARDCODED = [
-  { type: 'photo', photo: 'isr-1.jpeg',  title: 'ISR lesson', published: true },
-  { type: 'photo', photo: 'isr-2.jpeg',  title: 'ISR lesson', published: true },
-  { type: 'photo', photo: 'isr-3.jpeg',  title: 'ISR lesson', published: true },
-  { type: 'photo', photo: 'isr-4.jpeg',  title: 'ISR lesson', published: true },
-  { type: 'photo', photo: 'isr-5.jpeg',  title: 'ISR lesson', published: true },
-  { type: 'photo', photo: 'isr-6.jpeg',  title: 'ISR lesson', published: true },
-  { type: 'photo', photo: 'isr-7.png',   title: 'ISR lesson', published: true },
-  { type: 'photo', photo: 'isr-8.png',   title: 'ISR lesson', published: true },
-  {
-    type: 'photo',
-    photo: 'https://raw.githubusercontent.com/caseykeown/swim-for-vinny/main/Daphne-baby-in-water.png',
-    title: 'Daphne with a baby in the water',
-    published: true
-  },
-  {
-    type: 'video',
-    video_url: 'https://www.tiktok.com/@daphnemattingly/video/7643985709199658271',
-    title: 'TikTok video',
-    published: true
-  },
-  {
-    type: 'video',
-    video_url: 'https://www.tiktok.com/@daphnemattingly/video/7639901780742081822',
-    title: 'TikTok video',
-    published: true
-  },
-];
+// All gallery items (original photos, Daphne's baby photo, both TikToks)
+// now live as real _gallery/*.md entries, manageable through Sveltia CMS
+// just like Daphne's own uploads. This array is intentionally empty —
+// kept as a structural fallback only, in case _gallery/ is ever missing
+// or empty (e.g. very first deploy before any CMS entries exist).
+const HARDCODED = [];
 
 let cmsItems = [];
 let skipped = [];
